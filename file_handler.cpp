@@ -2,12 +2,12 @@
 
 #include "shared_memory.h"
 
-writeFromBufferContent(BufferContent *bufferContent, std::string filename)
+bool writeFromBufferContent(BufferContent *bufferContent, std::string filename)
 {
 
 }
 
-readIntoBufferContent(std::string filename, BufferContent *bufferContent)
+bool readIntoBufferContent(std::string filename, BufferContent *bufferContent)
 {
 
 }

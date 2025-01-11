@@ -5,6 +5,6 @@
 #ifndef SHARED_MEMORY_H
 	#define SHARED_MEMORY_H
 
-	writeFromBufferContent(BufferContent *bufferContent, std::string filename);
-	readIntoBufferContent(std::string filename, BufferContent *bufferContent);
+	bool writeFromBufferContent(BufferContent *bufferContent, std::string filename);
+	bool readIntoBufferContent(std::string filename, BufferContent *bufferContent);
 #endif
