@@ -40,11 +40,10 @@ BufferContents* getSharedMemory(string filename)
 	BufferContents bufferContents;
 
 	int shm_size = shm_open(SIZE_NAME, O_RDONLY, 0666);
-	int shm = shm_open(NAME, O_RDONLY, 0666);
+	int shm = shm_open(NAME, O_CREAT | O_RDWR, 0666);
 	if (shm_size >= 0) {
 		bc = (BufferContents*)mmap(0, SIZE_SIZE, PROT_READ, MAP_SHARED, shm_size, 0);
 		bufferContents.size = bc->size;
-		shm = shm_open(NAME, O_CREAT | O_RDONLY, 0666);
 		return (BufferContents*)mmap(0, bc->size, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
 		// Must make new everything
