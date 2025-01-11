@@ -10,7 +10,7 @@ using namespace std;
 
 string cleanFilename(string filename)
 {
-	char* output = realpath(filename, new char[PATH_MAX+1]);
+	char* output = realpath(filename, new char[PATH_MAX + 1]);
 	string out = output;
 	delete output;
 	return out;
@@ -32,14 +32,17 @@ BufferContents* getSharedMemory(string filename, bool &host)
 
 	int shm = shm_open(NAME, O_RDWR, 0666);
 	if (shm >= 0) {
-		host = false;
 		shm_unlink(NAME);
+
+		host = false;
 		shm = shm_open(NAME, O_RWDR, 066);
-		ftruncate(shm, SIZE);
-		return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm_open(NAME, O_RWDR, 0666), 0);
+
+		return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
 		host = true;
+
 		shm = shm_open(NAME, O_CREAT | O_RDWR, 0666);
+		ftruncate(shm, SIZE);
 
 		if (shm >= 0)
 			return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
