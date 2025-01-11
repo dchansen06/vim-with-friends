@@ -18,7 +18,7 @@ struct Cursor{
 
 // Precondition: takes in a character for cursor movement
 // Postcondition: moves the cursor based on the input
-void moveCursor (int, Cursor&);
+void moveCursor (int Cursor&);
 
 // Initializes ncurses
 void initializeScreen();
