@@ -18,7 +18,7 @@
 
 	// Precondition: takes in the current mode of the editor and the cursor object
 	// Postcondition: displays the current mode of the editor
-	void displayMode(string, Cursor);
+	void displayMode(std::string, Cursor);
 
 	void vfNCurse();
 #endif
