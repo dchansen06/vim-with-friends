@@ -39,11 +39,16 @@ int main(){
 
     int chr = 'a';
     while (!quit){
+        // Displays the mode
         displayMode(mode, cur);
+
+        // Gets user input
         chr = getch();
-        if (!(mode == "INSERT" && chr == '0')){
-            moveCursor(chr, cur);
-        }
+
+        // Moves cursor if needed
+        moveCursor(chr, cur);
+
+        // Deals with commands in normal mode
         if (mode == "NORMAL"){
             switch (chr){
                 case 'i':
@@ -52,8 +57,13 @@ int main(){
                 case 'q':
                     quit = true;
                     break;
+                case '0':
+                    cur.X = 0;
+                    move(cur.Y, cur.X);
+                    break;
             }
-            
+        
+        // Writes in insert mode
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
@@ -122,7 +132,7 @@ void moveCursor (int chr, Cursor& cur){
 
         // Move right
         case KEY_RIGHT:
-            if (cur.X != COLS)
+            if (cur.X != COLS - 1)
                 cur.X++;
             break;
 
@@ -131,10 +141,6 @@ void moveCursor (int chr, Cursor& cur){
             if (cur.X != 0)
                 cur.X--;
             break;
-
-        // Move to beginning of the line
-        case '0':
-            cur.X = 0;
     }
     move(cur.Y, cur.X);
 }
