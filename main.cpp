@@ -36,7 +36,7 @@ bool writeFile(volatile BufferContents* buffer, char *fileName) {
     }
 
     for(int i = 0; i < buffer->size; i++) {
-        outFile << content[i];
+        outFile << buffer->content[i];
     }
 
     outFile.close();
