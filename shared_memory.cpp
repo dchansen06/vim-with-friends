@@ -21,7 +21,7 @@ string cleanFilename(string filename)
 	return out;
 }
 
-BufferContents* getSharedMemory(string filename, bool &host)
+volatile BufferContents* getSharedMemory(string filename, bool &host)
 {
 	string name = "";
 	for (char letter : cleanFilename(filename)) {
@@ -41,7 +41,7 @@ BufferContents* getSharedMemory(string filename, bool &host)
 		host = false;
 		shm = shm_open(NAME, O_RDWR, 066);
 
-		return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
+		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
 		host = true;
 
@@ -49,7 +49,7 @@ BufferContents* getSharedMemory(string filename, bool &host)
 		ftruncate(shm, SIZE);
 
 		if (shm >= 0)
-			return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
+			return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	}
 
 	return nullptr;

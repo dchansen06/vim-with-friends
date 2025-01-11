@@ -55,7 +55,6 @@ int main(){
                     quit = true;
                     break;
             }
-            
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
