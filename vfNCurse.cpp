@@ -130,3 +130,8 @@ void moveCursor (int chr, Cursor& cur){
     }
     move(cur.Y, cur.X);
 }
+
+ScreenBuffer fillScreenBuffer(BufferContents* bufferContents)
+{
+	return (ScreenBuffer){bufferContents->numberOfPointers, bufferContents->cursorPosition, bufferContents->content};
+}
