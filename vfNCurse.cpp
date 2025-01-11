@@ -27,7 +27,7 @@ void initializeScreen();
 // Postcondition: displays the current mode of the editor
 void displayMode(string, Cursor);
 
-int main(){
+void vfNCurse(){
 
     // Sets up everything for ncurses
     initializeScreen();
@@ -71,8 +71,6 @@ int main(){
     }
 
     endwin();
-
-    return 0;
 }
 // Displays the current mode of the editor
 void displayMode(string mode, Cursor cur){
