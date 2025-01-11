@@ -29,8 +29,8 @@
 	void displayMode(std::string, Cursor);
 
 	// Precondition: takes in a reference to the screen buffer
-  // Postcondition: prints it out to the screen
-  void printScreen(ScreenBuffer& sb, Cursor);
+	// Postcondition: prints it out to the screen
+	void printScreen(ScreenBuffer& sb, Cursor);
 
 	void vfNCurse();
 
