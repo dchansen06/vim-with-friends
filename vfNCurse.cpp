@@ -128,17 +128,13 @@ void moveCursor (int chr, Cursor& cur){
     move(cur.Y, cur.X);
 }
 
-<<<<<<< HEAD
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
 void printScreen(ScreenBuffer& sb){
     
 }
 
-ScreenBuffer fillScreenBuffer(BufferContents* bufferContents)
-=======
 ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
->>>>>>> d9f5a7159e42a6eaed51a84f31027b4ab89765c5
 {
 	return (ScreenBuffer*){bufferContents->numberOfPointers, bufferContents->cursorPosition, bufferContents->content};
 }
