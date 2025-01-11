@@ -30,4 +30,4 @@
 *.exe
 *.out
 *.app
-vfNCurse
+main
