@@ -45,10 +45,17 @@ int main(){
         // Gets user input
         chr = getch();
 
+<<<<<<< HEAD
         // Moves cursor if needed
         moveCursor(chr, cur);
 
         // Deals with commands in normal mode
+=======
+        if (!(mode == "INSERT" && chr == '0')){
+            moveCursor(chr, cur);
+        }
+
+>>>>>>> 8acd0c5c75c1b8e33c4f82b4b8cdf545107e1117
         if (mode == "NORMAL"){
             switch (chr){
                 case 'i':
@@ -62,14 +69,15 @@ int main(){
                     move(cur.Y, cur.X);
                     break;
             }
+<<<<<<< HEAD
         
         // Writes in insert mode
+=======
+>>>>>>> 8acd0c5c75c1b8e33c4f82b4b8cdf545107e1117
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
-                continue;
-            }
-            if (chr < 256){
+            } else if (chr < 256){
                 attron(COLOR_PAIR(HIGHLIGHTING)); // Start highlighting
                 addch(chr);
                 attroff(COLOR_PAIR(HIGHLIGHTING)); // End highlighting
@@ -77,6 +85,7 @@ int main(){
                     move(cur.Y, ++cur.X);
             }
         }
+
         refresh();
     }
 

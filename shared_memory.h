@@ -11,7 +11,7 @@
 	};
 
 	// Always returns a shared memory file descriptor
-	BufferContents* getSharedMemory(std::string filename, bool &host);
+	volatile BufferContents* getSharedMemory(std::string filename, bool &host);
 
 	/*
 		Opening a file creates /tmp/vim-with-friends/.../
