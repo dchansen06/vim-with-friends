@@ -5,27 +5,44 @@
 #include <cstdlib>
 
 #include "shared_memory.h"
+#include "vfNCurse.h"
 
 using namespace std;
 
 bool readFile(volatile BufferContents* buffer, char *fileName) {
-    ifstream inFile;
-    inFile.open(fileName);
-    if(inFile) {
-        char ch;
-        inFile.get(ch);
-        int i;
-        for(i = 0; !inFile.eof(); i++){
-            buffer->content[i] = ch;
-            inFile.get(ch);
-        }
-        buffer->size = i;
+    ifstream inFile(fileName);
+    if(!inFile) {
         inFile.close();
-        return true;
+        return false;
     }
+
+    char ch;
+    inFile.get(ch);
+    int i;
+    for(i = 0; !inFile.eof(); i++){
+        buffer->content[i] = ch;
+        inFile.get(ch);
+    }
+    buffer->size = i;
     inFile.close();
-    return false;
+    return true;
 }
+
+bool writeFile(volatile BufferContents* buffer, char *fileName) {
+    ofstream outFile(fileName);
+    if(!outFile) {
+        outFile.close();
+        return false;
+    }
+
+    char ch;
+    for(int i = 0; i < buffer->size; i++) {
+        outFile << ch;
+    }
+    outFile.close();
+    return true;
+}
+
 
 int main(int argc, char *argv[]) {
     if(argc < 2) {
@@ -43,4 +60,6 @@ int main(int argc, char *argv[]) {
             sharedBuffer->size = 0;
         }
     }
+
+
 }
