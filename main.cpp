@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 #include "shared_memory.h"
-#include "vfNCurse.h"
+//#include "vfNCurse.h"
 
 using namespace std;
 
@@ -61,5 +61,16 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    string lineToWrite;
+    getline(cin, lineToWrite);
 
+    for(int i = 0; i < lineToWrite.size(); i++) {
+        sharedBuffer->content[sharedBuffer->size] = lineToWrite.at(i);
+        sharedBuffer->size++;
+    }
+    if(isHost) {
+        if(!writeFile(sharedBuffer, argv[1])) {
+            cout << "Failed to write to " << argv[1] << endl;
+        }
+    }
 }
