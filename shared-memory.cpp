@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <string>
 #include <cstdlib>
+#include <fstream>
 
 using namespace std;
 
@@ -15,8 +16,7 @@ string cleanFilename(string filename)
 	return out;
 }
 
-// Always returns a shared memory file descriptor
-BufferContents* getSharedMemory(string filename)
+BufferContents* getSharedMemory(string filename, bool &host)
 {
 	string name = "";
 	for (char letter : cleanFilename(filename)) {
@@ -26,41 +26,27 @@ BufferContents* getSharedMemory(string filename)
 			name += letter;
 	}
 
-	// CONTENT
-	// int \0 int int ... \0 void*
-	// <NUMBER OF CURSORS> \0 <CURSOR1> <CURSOR2> ... \0 <CONTENTS>
-
-
-	// SIZE
-	// unsigned long long
-	const int SIZE_SIZE = 524288;
-	const char* SIZE_NAME = "SIZE_" + name;
+	const int SIZE = 524288;
 	const char* NAME = name;
 	BufferContents* bc;
-	BufferContents bufferContents;
 
-	int shm_size = shm_open(SIZE_NAME, O_RDONLY, 0666);
-	int shm = shm_open(NAME, O_CREAT | O_RDWR, 0666);
-	if (shm_size >= 0) {
-		bc = (BufferContents*)mmap(0, SIZE_SIZE, PROT_READ, MAP_SHARED, shm_size, 0);
-		bufferContents.size = bc->size;
-		return (BufferContents*)mmap(0, bc->size, PROT_WRITE, MAP_SHARED, shm, 0);
+	int shm = shm_open(NAME, O_RDWR, 0666);
+	if (shm >= 0) {
+		host = false;
+		shm_unlink(NAME);
+		shm = shm_open(NAME, O_RWDR, 066);
+		ftruncate(shm, SIZE);
+		return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm_open(NAME, O_RWDR, 0666), 0);
 	} else {
-		// Must make new everything
+		host = true;
+		shm = shm_open(NAME, O_CREAT | O_RDWR, 0666);
+
+		if (shm >= 0)
+			return (BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	}
 
-	// Look inside temp for that file
-		// Yes - Open that one
-		// No - Make a new one
-	shm_unlink(name);
+	return nullptr;
 }
-
-/*	struct BufferContents {
-		unsigned long long size;
-		int numberOfCursors;
-		int[] cursorPosition;
-		void* content;
-	};*/
 
 void parseBufferContents(BufferContents bufferContents, unsigned long long &size, int &numberOfCursors, int[] cursorPosition, void* content)
 {

@@ -4,13 +4,13 @@
 	#define SHARED_MEMORY_H
 
 	// Always returns a shared memory file descriptor
-	BufferContents* getSharedMemory(std::string filename);
+	BufferContents* getSharedMemory(std::string filename, bool &host);
 
 	struct BufferContents {
 		unsigned long long size;
 		int numberOfCursors;
-		void* content;
-		int[] cursorPosition;
+		int cursorPosition[16];	// MAGIC
+		char buffer[];
 	};
 
 	// Fill arguments from BufferContents
