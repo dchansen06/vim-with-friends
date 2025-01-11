@@ -5,3 +5,6 @@ all: main
 
 main: main.cpp vfNCurse.o shared_memory.o
 	g++ $(^) -o $(@) -lncurses -Wall -Wextra
+
+clean:
+	rm -f main *.o
