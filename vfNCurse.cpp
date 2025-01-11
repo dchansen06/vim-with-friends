@@ -13,9 +13,6 @@ using namespace std;
 
 void vfNCurse(){
 
-    // Sets up everything for ncurses
-    initializeScreen();
-
     // Creates cursor object and stores current mode of the editor
     Cursor cur = {0, 0};
     string mode = "NORMAL";
@@ -129,6 +126,12 @@ void moveCursor (int chr, Cursor& cur){
             break;
     }
     move(cur.Y, cur.X);
+}
+
+// Precondition: takes in a reference to the screen buffer
+// Postcondition: prints it out to the screen
+void printScreen(ScreenBuffer& sb){
+    
 }
 
 ScreenBuffer fillScreenBuffer(BufferContents* bufferContents)

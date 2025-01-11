@@ -26,6 +26,10 @@
 	// Postcondition: displays the current mode of the editor
 	void displayMode(std::string, Cursor);
 
+	// Precondition: takes in a reference to the screen buffer
+  // Postcondition: prints it out to the screen
+  void printScreen(ScreenBuffer& sb);
+
 	void vfNCurse();
 
 	ScreenBuffer fillScreenBuffer(BufferContents* bufferContents);
