@@ -11,6 +11,9 @@ using namespace std;
 // Define Statements
 #define HIGHLIGHTING 1
 
+// Helper Functions
+void printChar (int, Cursor);
+
 void vfNCurse(){
 
     // Creates cursor object and stores current mode of the editor
@@ -62,7 +65,7 @@ void vfNCurse(){
     }
 
     endwin();
-}i
+}
 
 // Displays the current mode of the editor
 void displayMode(string mode, Cursor cur){
@@ -127,9 +130,10 @@ void moveCursor (int chr, Cursor& cur){
 
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
-void printScreen(ScreenBuffer& sb, Cursor cur){
+void printScreen(ScreenBuffer* sb, Cursor cur){
     // Runs through the contents of the buffer, printing them to the screen
-    for(sb.content: chr){
+    for(int i = 0; i < sb->size; i++){
+        int chr = sb->content[i];
         printChar (chr, cur);
     }
 }
