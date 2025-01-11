@@ -1,1 +1,44 @@
 #include <ncurses.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+
+#include "shared_memory.h"
+
+using namespace std;
+
+bool readFile(volatile BufferContents* buffer, char *fileName) {
+    ifstream inFile;
+    inFile.open(fileName);
+    if(inFile) {
+        char ch;
+        inFile.get(ch);
+        int i;
+        for(i = 0; !inFile.eof(); i++){
+            buffer->content[i] = ch;
+            inFile.get(ch);
+        }
+        buffer->size = i;
+        return true;
+    }
+    return false;
+}
+
+int main(int argc, char *argv[]) {
+    if(argc < 2) {
+        cout << "Too few arguments.\n";
+        return 1;
+    }
+    
+    bool isHost;
+    volatile BufferContents *sharedBuffer = getSharedMemory(argv[1], isHost);
+    if(isHost) {
+        sharedBuffer->numberOfCursors = 1;
+        sharedBuffer->cursorPosition[0] = 0;
+
+        if(!readFile(sharedBuffer, argv[1])){
+            sharedBuffer->size = 0;
+        }
+    }
+}
