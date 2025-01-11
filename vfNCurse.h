@@ -4,9 +4,15 @@
 
 #ifndef VFNCURSE_H
 	#define VFNCURSE_H
-	struct Cursor{
+	struct Cursor {
 		int X;
 		int Y;
+	};
+
+	struct ScreenBuffer {
+		int numberOfCursors;
+		int cursorPosition[16];
+		char content[];
 	};
 
 	// Precondition: takes in a character for cursor movement
@@ -21,4 +27,6 @@
 	void displayMode(std::string, Cursor);
 
 	void vfNCurse();
+
+	ScreenBuffer fillScreenBuffer(BufferContents* bufferContents);
 #endif
