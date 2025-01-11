@@ -140,7 +140,7 @@ void printScreen(ScreenBuffer* sb, Cursor cur){
 
 ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
 {
-	return (ScreenBuffer*){bufferContents->numberOfPointers, bufferContents->cursorPosition, bufferContents->content};
+	return (ScreenBuffer*)bufferContents;	// May have to do more edits later, for now it is good
 }
 
 // Print a single character
