@@ -12,8 +12,9 @@
 	};
 
 	struct ScreenBuffer {
+		unsigned long long size;
 		int numberOfCursors;
-		int cursorPosition[16];
+		int cursorPosition[16];	// Magic
 		char content[];
 	};
 
