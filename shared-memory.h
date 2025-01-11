@@ -1,12 +1,20 @@
-#include <sys/shm.h>
-#include <fstream>
-#include <iostream>
-#define SHARED_MEMORY_H
+#include <string>
 
 #ifndef SHARED_MEMORY_H
 	#define SHARED_MEMORY_H
 
-	int getSharedMemory(string filename);
+	// Always returns a shared memory file descriptor
+	int getSharedMemory(std::string filename);
+
+	struct BufferContents {
+		unsigned long long size;
+		int numberOfCursors;
+		int[] cursorPosition;
+		void* content;
+	};
+
+	BufferContents parseBufferContents(unsigned long long &size, int &numberOfCursors, int[] cursorPosition, void* content);
+	void fillBufferConents(BufferContents &bufferContents, unsigned long long size, int numberOfCursors, int[] cursorPosition, void* content);
 
 	/*
 		Opening a file creates /tmp/vim-with-friends/.../
@@ -18,5 +26,3 @@
 		Everyone R/W same memory
 	*/
 #endif
-
-int main() { std::cout << "Worked\n"; }
