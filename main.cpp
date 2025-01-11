@@ -20,8 +20,10 @@ bool readFile(volatile BufferContents* buffer, char *fileName) {
             inFile.get(ch);
         }
         buffer->size = i;
+        inFile.close();
         return true;
     }
+    inFile.close();
     return false;
 }
 
