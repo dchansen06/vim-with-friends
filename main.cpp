@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     }
     
     bool isHost;
-    volatile BufferContents *sharedBuffer = getSharedMemory(argv[1], isHost);
+    volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
     if(isHost) {
         sharedBuffer->numberOfCursors = 1;
         sharedBuffer->cursorPosition[0] = 0;

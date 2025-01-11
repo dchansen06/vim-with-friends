@@ -14,11 +14,13 @@ using namespace std;
 
 string cleanFilename(string filename)
 {
-	const char* file = filename.c_str();
-	char* output = realpath(file, new char[PATH_MAX + 1]);
-	string out = output;
-	delete output;
-	return out;
+	char buf[PATH_MAX];
+	char* path = realpath(filename.c_str(), buf);
+
+	if (path != nullptr)
+		return (string)path;
+	else
+		return "/tmp/broken.txt";
 }
 
 volatile BufferContents* getSharedMemory(string filename, bool &host)
