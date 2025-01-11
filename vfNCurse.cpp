@@ -7,7 +7,6 @@
 using namespace std;
 
 struct Cursor{
-    
     // xy coordinates of the cursor
     int X;
     int Y;
@@ -55,7 +54,6 @@ int main(){
         }
         refresh();
     }
-    
 
     endwin();
 
@@ -80,7 +78,6 @@ void initializeScreen(){
     clear();
     // Allows input from the arrow keys
     keypad(stdscr, TRUE);
-
 }
 
 // Precondition: takes in a character for cursor movement
