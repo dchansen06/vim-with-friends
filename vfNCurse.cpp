@@ -35,18 +35,25 @@ int main(){
     // Creates cursor object and stores current mode of the editor
     Cursor cur = {0, 0};
     string mode = "NORMAL";
+    bool quit = false;
 
     int chr = 'a';
-    while (chr != 'q'){
+    while (!quit){
         displayMode(mode, cur);
         chr = getch();
         if (!(mode == "INSERT" && chr == '0')){
             moveCursor(chr, cur);
         }
         if (mode == "NORMAL"){
-            if (chr == 'i'){
-                mode = "INSERT";
+            switch (chr){
+                case 'i':
+                    mode = "INSERT";
+                    break;
+                case 'q':
+                    quit = true;
+                    break;
             }
+            
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
