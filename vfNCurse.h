@@ -32,5 +32,5 @@
 
 	void vfNCurse();
 
-	ScreenBuffer fillScreenBuffer(BufferContents* bufferContents);
+	ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents);
 #endif
