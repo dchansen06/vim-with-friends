@@ -132,7 +132,7 @@ void moveCursor (int chr, Cursor& cur){
 // Postcondition: prints it out to the screen
 void printScreen(ScreenBuffer* sb, Cursor cur){
     // Runs through the contents of the buffer, printing them to the screen
-    for(int i = 0; i < sb->size; i++){
+    for(size_t i = 0; i < sb->size; i++){
         int chr = sb->content[i];
         printChar (chr, cur);
     }
