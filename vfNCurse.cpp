@@ -40,9 +40,11 @@ int main(){
     while (chr != 'q'){
         displayMode(mode, cur);
         chr = getch();
+
         if (!(mode == "INSERT" && chr == '0')){
             moveCursor(chr, cur);
         }
+
         if (mode == "NORMAL"){
             if (chr == 'i'){
                 mode = "INSERT";
@@ -50,9 +52,7 @@ int main(){
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
-                continue;
-            }
-            if (chr < 256){
+            } else if (chr < 256){
                 attron(COLOR_PAIR(HIGHLIGHTING)); // Start highlighting
                 addch(chr);
                 attroff(COLOR_PAIR(HIGHLIGHTING)); // End highlighting
@@ -60,6 +60,7 @@ int main(){
                     move(cur.Y, ++cur.X);
             }
         }
+
         refresh();
     }
 
