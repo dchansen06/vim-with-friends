@@ -57,7 +57,8 @@ int main(){
                 attron(COLOR_PAIR(HIGHLIGHTING)); // Start highlighting
                 addch(chr);
                 attroff(COLOR_PAIR(HIGHLIGHTING)); // End highlighting
-                move(cur.Y, ++cur.X);
+                if (cur.X != COLS - 1)
+                    move(cur.Y, ++cur.X);
             }
         }
         refresh();
