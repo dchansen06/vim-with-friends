@@ -69,6 +69,7 @@ void vfNCurse(){
 
     endwin();
 }
+
 // Displays the current mode of the editor
 void displayMode(string mode, Cursor cur){
     mvprintw(LINES-2, 0, mode.c_str()); // Prints out the mode
