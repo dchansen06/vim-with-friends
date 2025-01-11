@@ -2,6 +2,8 @@
 #include <curses.h>
 #include <string>
 
+#include "shared_memory.h"
+
 #ifndef VFNCURSE_H
 	#define VFNCURSE_H
 	struct Cursor {
