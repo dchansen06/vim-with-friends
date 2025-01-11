@@ -1,2 +1,2 @@
 # Hackathon Entry
-[SB Hacks XI](sbhacks.com)
+[SB Hacks XI](https://sbhacks.com)
