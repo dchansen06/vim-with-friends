@@ -2,5 +2,9 @@
 
 #include "shared_memory.h"
 
-writeFromBufferContent(BufferContent *bufferContent, std::string filename);
-readIntoBufferContent(std::string filename, BufferContent *bufferContent);
+#ifndef SHARED_MEMORY_H
+	#define SHARED_MEMORY_H
+
+	writeFromBufferContent(BufferContent *bufferContent, std::string filename);
+	readIntoBufferContent(std::string filename, BufferContent *bufferContent);
+#endif
