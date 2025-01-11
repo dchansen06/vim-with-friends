@@ -4,12 +4,12 @@
 
 #ifndef VFNCURSE_H
 	#define VFNCURSE_H
-	struct Cursor {
+	volatile struct Cursor {
 		int X;
 		int Y;
 	};
 
-	struct ScreenBuffer {
+	volatile struct ScreenBuffer {
 		int numberOfCursors;
 		int cursorPosition[16];
 		char content[];
@@ -28,5 +28,5 @@
 
 	void vfNCurse();
 
-	ScreenBuffer fillScreenBuffer(BufferContents* bufferContents);
+	ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents);
 #endif
