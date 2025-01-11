@@ -54,10 +54,7 @@ void vfNCurse(){
                 mode = "NORMAL";
             } else if (chr < 256){
                 attron(COLOR_PAIR(HIGHLIGHTING)); // Start highlighting
-                addch(chr);
-                attroff(COLOR_PAIR(HIGHLIGHTING)); // End highlighting
-                if (cur.X != COLS - 1)
-                    move(cur.Y, ++cur.X);
+
             }
         }
 
@@ -65,7 +62,7 @@ void vfNCurse(){
     }
 
     endwin();
-}
+}i
 
 // Displays the current mode of the editor
 void displayMode(string mode, Cursor cur){
@@ -130,11 +127,23 @@ void moveCursor (int chr, Cursor& cur){
 
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
-void printScreen(ScreenBuffer& sb){
-    
+void printScreen(ScreenBuffer& sb, Cursor cur){
+    // Runs through the contents of the buffer, printing them to the screen
+    for(sb.content: chr){
+        printChar (chr, cur);
+    }
 }
 
 ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
 {
 	return (ScreenBuffer*){bufferContents->numberOfPointers, bufferContents->cursorPosition, bufferContents->content};
+}
+
+// Print a single character
+void printChar (int chr, Cursor cur){
+    // Print out the character
+    addch(chr);
+    // Move the cursor over
+    if (cur.X != COLS - 1)
+        move(cur.Y, ++cur.X);
 }
