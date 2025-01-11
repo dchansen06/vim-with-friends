@@ -4,28 +4,12 @@
 #include <curses.h>
 #include <string>
 
+#include "vfNCurse.h"
+
 using namespace std;
 
 // Define Statements
 #define HIGHLIGHTING 1
-
-struct Cursor{
-    // xy coordinates of the cursor
-    int X;
-    int Y;
-
-};
-
-// Precondition: takes in a character for cursor movement
-// Postcondition: moves the cursor based on the input
-void moveCursor (int chr, Cursor& cursor);
-
-// Initializes ncurses
-void initializeScreen();
-
-// Precondition: takes in the current mode of the editor and the cursor object
-// Postcondition: displays the current mode of the editor
-void displayMode(string, Cursor);
 
 void vfNCurse(){
 
@@ -45,17 +29,14 @@ void vfNCurse(){
         // Gets user input
         chr = getch();
 
-<<<<<<< HEAD
         // Moves cursor if needed
         moveCursor(chr, cur);
 
         // Deals with commands in normal mode
-=======
         if (!(mode == "INSERT" && chr == '0')){
             moveCursor(chr, cur);
         }
 
->>>>>>> 8acd0c5c75c1b8e33c4f82b4b8cdf545107e1117
         if (mode == "NORMAL"){
             switch (chr){
                 case 'i':
@@ -69,11 +50,8 @@ void vfNCurse(){
                     move(cur.Y, cur.X);
                     break;
             }
-<<<<<<< HEAD
         
         // Writes in insert mode
-=======
->>>>>>> 8acd0c5c75c1b8e33c4f82b4b8cdf545107e1117
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
