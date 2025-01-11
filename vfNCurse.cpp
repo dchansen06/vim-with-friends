@@ -85,9 +85,6 @@ void initializeScreen(){
     clear();
     // Allows input from the arrow keys
     keypad(stdscr, TRUE);
-<<<<<<< HEAD
-=======
-
     // Color
     // Tests if the terminal supports color
     if (has_colors() == FALSE){
@@ -97,7 +94,6 @@ void initializeScreen(){
     }
     start_color(); // Initializes color
     init_pair(HIGHLIGHTING, COLOR_BLACK, COLOR_WHITE); // Associates HIGHLIGHTING to black on white
->>>>>>> ba90aa25c6d2da0102a9a8fe37126ac25e454bbe
 }
 
 // Precondition: takes in a character for cursor movement
