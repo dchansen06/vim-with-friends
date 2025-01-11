@@ -39,13 +39,23 @@ void vfNCurse(){
 
     int chr = 'a';
     while (!quit){
+        // Displays the mode
         displayMode(mode, cur);
+
+        // Gets user input
         chr = getch();
 
+<<<<<<< HEAD
+        // Moves cursor if needed
+        moveCursor(chr, cur);
+
+        // Deals with commands in normal mode
+=======
         if (!(mode == "INSERT" && chr == '0')){
             moveCursor(chr, cur);
         }
 
+>>>>>>> 8acd0c5c75c1b8e33c4f82b4b8cdf545107e1117
         if (mode == "NORMAL"){
             switch (chr){
                 case 'i':
@@ -54,7 +64,16 @@ void vfNCurse(){
                 case 'q':
                     quit = true;
                     break;
+                case '0':
+                    cur.X = 0;
+                    move(cur.Y, cur.X);
+                    break;
             }
+<<<<<<< HEAD
+        
+        // Writes in insert mode
+=======
+>>>>>>> 8acd0c5c75c1b8e33c4f82b4b8cdf545107e1117
         } else if (mode == "INSERT"){
             if (chr == 27){
                 mode = "NORMAL";
@@ -120,7 +139,7 @@ void moveCursor (int chr, Cursor& cur){
 
         // Move right
         case KEY_RIGHT:
-            if (cur.X != COLS)
+            if (cur.X != COLS - 1)
                 cur.X++;
             break;
 
@@ -129,10 +148,6 @@ void moveCursor (int chr, Cursor& cur){
             if (cur.X != 0)
                 cur.X--;
             break;
-
-        // Move to beginning of the line
-        case '0':
-            cur.X = 0;
     }
     move(cur.Y, cur.X);
 }
