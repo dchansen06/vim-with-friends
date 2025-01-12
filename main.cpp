@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
     }
 
     bool isHost;
-    volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
+    volatile BufferContents *sharedBuffer = getSharedMemory(argv[1], isHost);
     if(isHost) {
         cout << "Host\n";
         sharedBuffer->numberOfCursors = 1;
@@ -77,6 +77,6 @@ int main(int argc, char *argv[]) {
     }
 
     if(isHost) {
-        unlink(argv[1]);
+        cout << "Closed with code " << unlink(argv[1]) << endl;
     }
 }
