@@ -13,7 +13,7 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 	}
 
 	bufferContent->content[bufferCount->cursorPos[cursorIdentity]] = character;
-	bufferCount->cursorPos[cursorIdentity]++;
+	bufferContent->cursorPos[cursorIdentity]++;
     // MOVE OTHER CURSORS THAT ARE AFTER
     for (int i = 0; i < 16; i++){
         if (i == cursorIdentity) {
