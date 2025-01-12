@@ -60,4 +60,8 @@ int main(int argc, char *argv[]) {
             sharedBuffer->size = 0;
         }
     }
+
+    if(isHost) {
+        unlink(argv[1]);
+    }
 }
