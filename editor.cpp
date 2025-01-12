@@ -53,7 +53,7 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			bufferContent->cursorPos[cursorIdentity] = shift + 1;
 			break;
 		case KEY_BACKSPACE:
-			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
+			for (volatile unsigned int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
 				bufferContent->content[i - 1] = bufferContent->content[i];
 
 			for (int i = 0; i < 16; i++) {
@@ -79,13 +79,13 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 // Moves the cursor down a line
 void moveDown (volatile char content[], int size, volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
-			int nextLineLen;
+			int nextLineLen = 0;
 
 			int posLastEndl = cursorID;
 			int rightEndL = cursorID;
 			
 			// Finds the position of the last \n
-			while (posLastEndl != 0 && content[posLastEndl] != '\n')
+			while (posLastEndl > 0 && content[posLastEndl] != '\n')
 				posLastEndl--;
 			
 			// Calculates the x position of the cursor
@@ -95,7 +95,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 			while (content[rightEndL] != '\n'){
 
 				// If already the last, then don't go anywhere
-				if (rightEndL == size){
+				if (rightEndL >= size){
 					return;
 				}
 
