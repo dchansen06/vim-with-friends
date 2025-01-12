@@ -9,9 +9,9 @@ void insert(char character, BufferContents *bufferContent)
 
 }
 
-void update(char input, BufferContents *bufferContent, int cursorIdentity)
+void update(BufferContents *bufferContent, int cursorIdentity)
 {
-	switch(input) {
+	switch(input = getch()) {
 		case KEY_UP:
 			
 			break;
@@ -20,6 +20,9 @@ void update(char input, BufferContents *bufferContent, int cursorIdentity)
 
 			while (currentPositionX < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - currentPositionX] != '\n')
 				currentPositionX++;
+
+			int i = 0;
+			while(i <= bufferContent->size
 
 			while (countToHome != 0 && bufferContent->content[countToHome] != '\n') {
 				cursorPos++;
