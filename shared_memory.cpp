@@ -37,7 +37,8 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	}
 
 	const int SIZE = 524288;
-	const char* NAME = ("/tmp" + name).c_str();	// Later mkdir so that we can /tmp/vim-with-friends/
+
+	const char* NAME = name.c_str();
 
 	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
 
