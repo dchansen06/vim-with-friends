@@ -35,7 +35,7 @@ bool writeFile(volatile BufferContents* buffer, char *fileName) {
         return false;
     }
 
-    for(int i = 0; i < buffer->size; i++) {
+    for(volatile long long unsigned i = 0; i < buffer->size; i++) {
         outFile << buffer->content[i];
     }
 
@@ -74,5 +74,9 @@ int main(int argc, char *argv[]) {
         if(!writeFile(sharedBuffer, argv[1])) {
             cout << "Failed to write to " << argv[1] << endl;
         }
+    }
+
+    if(isHost) {
+        unlink(argv[1]);
     }
 }

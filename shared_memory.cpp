@@ -15,41 +15,45 @@ using namespace std;
 
 string cleanFilename(string filename)
 {
+	string name = "";
+
 	char buf[PATH_MAX];
 	char* path = realpath(filename.c_str(), buf);
 
-	if (path != nullptr) {
-		return (string)path;
-	} else {
-		cerr << "Invalid filename given!\n";
-		exit(-1);
-	}
-}
+	if (path == nullptr)
+		path = (char*)filename.c_str();
 
-volatile BufferContents* getSharedMemory(string filename, bool &host)
-{
-	string name = "";
-	for (char letter : cleanFilename(filename)) {
+	for (char letter : (string)path) {
 		if (letter == '/')
 			name += '.';
 		else
 			name += letter;
 	}
 
+	return "/tmp/vfNCurse/" + name;
+}
+
+volatile BufferContents* getSharedMemory(string filename, bool &host)
+{
 	const int SIZE = 524288;
 
-	const char* NAME = name.c_str();
+	filename = cleanFilename(filename);
+	const char* NAME = filename.c_str();
 
-	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
+	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR|O_TRUNC, 0666);
 
 	if (EEXIST != errno) {
 		host = true;
-		cout << "Trying to do ftruncate " << ftruncate(shm, SIZE) << endl;
-		//ftruncate(shm, SIZE);
+		ftruncate(shm, SIZE);
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
 		host = false;
 		shm = shm_open(NAME, O_RDWR, 0666);
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, shm, 0);
 	}
+}
+
+int unlink(std::string filename)
+{
+	return shm_unlink(cleanFilename(filename).c_str());
 }
