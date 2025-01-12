@@ -26,13 +26,16 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 
 void update(volatile BufferContents* bufferContent, int cursorIdentity)
 {
-	char input = getch();
+	int input = getch();
 //	int shift = 0;	// Only use in KEY_HOME
 
-	if (input == ERR || input != 27 && input != '\t' && input != '\n' && !isprint(input))
+	if (input == ERR)
 		return;	// Nothing to do
 
 	switch(input) {
+		case KEY_RIGHT:
+			moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			break;
 		case 27: // ␛
 			if (getch() != '[')
 				break;
