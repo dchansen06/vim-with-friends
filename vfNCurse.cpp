@@ -62,6 +62,12 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
 	curY = 0;
 	curX = 0;
 	move(curY, curX);
+    if (bc->size == 0) {
+        attron(COLOR_PAIR(HIGHLIGHTING));
+        printChar(' ');
+	attroff(COLOR_PAIR(HIGHLIGHTING));
+    }
+
     // Runs through the contents of the buffer, printing them to the screen
     for(volatile unsigned long long i = 0; i < bc->size; i++){
         int chr = bc->content[i]; // Get the character form the array
