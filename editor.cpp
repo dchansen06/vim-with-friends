@@ -12,7 +12,7 @@ void insert(char character, volatile BufferContents *bufferContent)
 
 void update(volatile BufferContents *bufferContent, int cursorIdentity)
 {
-    char input;
+	char input;
 	switch(input = getch()) {
 		case KEY_UP:
 			int offsetToLeft = 0;
@@ -23,30 +23,31 @@ void update(volatile BufferContents *bufferContent, int cursorIdentity)
 			while(offsetToLeft + lineLengthAbove > bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft - lineLengthAbove] != '\n')
 				lineLengthAbove++;
 
-			cursorPos[cursorIdentity] -= lineLengthAbove;
+			bufferContent->cursorPos[cursorIdentity] -= lineLengthAbove;
 			break;
 		case KEY_DOWN:
-			int offsetToLeft = 0, offsetToRight = 0;
-			while (offsetToLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft] != '\n')
-				offsetToLeft++;
+			int offsetLeft = 0;
+			int offsetToRight = 0;
+			while (offsetLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetLeft] != '\n')
+				offsetLeft++;
 
-			while(offsetToRight <= bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent[bufferContent->cursorPos[cursorIdentity] + offsetToRight] != '\n')
+			while(offsetToRight <= bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] + offsetToRight] != '\n')
 				offsetToRight++;
 
-			cursorPos += offsetToLeft + offsetToRight;
+			bufferContent->cursorPos[cursorIdentity] += offsetLeft + offsetToRight;
 			break;
 		case KEY_LEFT:
-			cursorPos[cursorIdentity]--;
+			bufferContent->cursorPos[cursorIdentity]--;
 			break;
 		case KEY_RIGHT:
-			cursorPos[cursorIdentity]++;
+			bufferContent->cursorPos[cursorIdentity]++;
 			break;
 		case KEY_HOME:
 			int shift = bufferContent->cursorPos[cursorIdentity];
 			while (shift >= 0 && bufferContent->content[shift] != '\n')
 				shift--;
 
-			cursorPos[cursorIdentity] = shift + 1;
+			bufferContent->cursorPos[cursorIdentity] = shift + 1;
 			break;
 		case KEY_BACKSPACE:
 			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
