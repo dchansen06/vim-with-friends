@@ -149,7 +149,7 @@ void moveUp (volatile char content[], volatile int& cursorID){
 			cursorXPos = cursorID - beginThisLine;
 
 			// Runs till the end of current line
-			if (content[beginThisLine-1] == '\n' && content[beginThisLine-2] == '\n'){
+			if (content[beginThisLine-2] == '\n'){
 				cursorID = beginThisLine-1;
 				return;
 			}
