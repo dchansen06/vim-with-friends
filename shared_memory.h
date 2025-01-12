@@ -4,9 +4,10 @@
 	#define SHARED_MEMORY_H
 
 	struct BufferContents {
-		unsigned long long size;
+		unsigned int size;
 		int numberOfCursors;
 		int cursorPosition[16];	// MAGIC
+        bool isBeingAccessed; // pause all accesses until this is cleared
 		char content[];
 	};
 

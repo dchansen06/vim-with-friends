@@ -10,9 +10,11 @@
 using namespace std;
 
 bool readFile(volatile BufferContents* buffer, char *fileName) {
+    buffer->isBeingAccessed = true;
     ifstream inFile(fileName);
     if(!inFile) {
         inFile.close();
+        buffer->isBeingAccessed = false;
         return false;
     }
 
@@ -25,13 +27,16 @@ bool readFile(volatile BufferContents* buffer, char *fileName) {
     }
     buffer->size = i;
     inFile.close();
+    buffer->isBeingAccessed = false;
     return true;
 }
 
 bool writeFile(volatile BufferContents* buffer, char *fileName) {
+    buffer->isBeingAccessed = true;
     ofstream outFile(fileName);
     if(!outFile) {
         outFile.close();
+        buffer->isBeingAccessed = false;
         return false;
     }
 
@@ -40,6 +45,7 @@ bool writeFile(volatile BufferContents* buffer, char *fileName) {
     }
 
     outFile.close();
+    buffer->isBeingAccessed = false;
     return true;
 }
 
@@ -59,6 +65,7 @@ int main(int argc, char *argv[]) {
         if(!readFile(sharedBuffer, argv[1])){
             sharedBuffer->size = 0;
         }
+        sharedBuffer->isBeingAccessed = false;
     }
 
 //    if(isHost) {
