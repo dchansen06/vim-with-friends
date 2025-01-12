@@ -91,9 +91,9 @@ void ScreenInfo::moveCursor (int chr){
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
 void ScreenInfo::printScreen(BufferContents* bc){
+    myCur.X = myCur.Y = 0;
     // Runs through the contents of the buffer, printing them to the screen
     for(size_t i = 0; i < bc->size; i++){
-        refresh();
         int chr = bc->content[i]; // Get the character form the array
         
         // Check for escape characters
@@ -104,6 +104,9 @@ void ScreenInfo::printScreen(BufferContents* bc){
                 }
                 continue;
             case '\n':
+                if(myCur.Y >= LINES){
+                    goto leaveLoop;
+                }
                 myCur.X = 0;
                 myCur.Y++;
                 move(myCur.Y, myCur.X);
@@ -113,16 +116,18 @@ void ScreenInfo::printScreen(BufferContents* bc){
         // Otherwise, prints out the character
         printChar (chr);
     }
+leaveLoop:
     refresh();
 }
 
 // Print a single character
 void ScreenInfo::printChar (int chr){
     // Print out the character
-    addch(chr);
     // Move the cursor over
-    if (myCur.X != COLS - 1)
+    if (myCur.X != COLS - 1) {
+        addch(chr);
         move(myCur.Y, ++myCur.X);
+    }
 }
 
 bool ScreenInfo::checkCursor (Cursor cursors[], int numCurs){
