@@ -40,7 +40,7 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	filename = cleanFilename(filename);
 	const char* NAME = filename.c_str();
 
-	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
+	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR|O_TRUNC, 0666);
 
 	if (EEXIST != errno) {
 		host = true;
