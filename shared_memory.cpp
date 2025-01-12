@@ -23,7 +23,7 @@ string cleanFilename(string filename)
 
 	if (path == NULL) {
 		path = (char*)filename.c_str();
-		cerr << "Something went really wrong\n";
+		cerr << "Something went really wrong, could not find " << path << endl;
 		exit(-1);
 	}
 
@@ -41,14 +41,12 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 {
 	const int SIZE = 524288;
 
-	filename = "/tmp" + cleanFilename(filename);
+	filename = "/" + cleanFilename(filename);
 	const char* NAME = filename.c_str();
-	cout << "Name is " << filename.c_str() << " and " << NAME << " and " << filename << endl;
 
+	errno = 0;
 	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
-
 	cout << "shm is " << shm << " and errno is " << errno << " and filename is " << NAME << endl;
-	cout << "All errors: EACCESS" << EACCES << " EEXIST" << EEXIST << " EINVAL" << EINVAL << " EMFILE" << EMFILE << " ENAMETOOLONG" << ENAMETOOLONG << " ENFILE" << ENFILE << " ENOENT" << ENOENT << endl;
 
 	if (EEXIST != errno && shm >= 0) {
 		host = true;
