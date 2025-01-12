@@ -63,9 +63,8 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
 	curX = 0;
 	move(curY, curX);
     if (bc->size == 0) {
-        attron(COLOR_PAIR(HIGHLIGHTING));
-        printChar(' ');
-	attroff(COLOR_PAIR(HIGHLIGHTING));
+	bc->size++;
+	bc->content[0] = ' ';
     }
 
     // Runs through the contents of the buffer, printing them to the screen
