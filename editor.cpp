@@ -91,6 +91,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 			// Finds the position of the last \n
 			while (beginThisLine >= 0 && content[beginThisLine] != '\n')
 				beginThisLine--;
+
 			beginThisLine++; // Gets the position of this line
 
 			// Calculates the x position of the cursor
@@ -108,19 +109,18 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 
 			}
 
-			rightEndl++;
-
 			// Gets the size of the next line
 			while (content[rightEndl + nextLineLen] != '\n')
 				nextLineLen++;
 			
+			nextLineLen++;
 			
 			if (cursorXPos > nextLineLen){
 				cursorID = rightEndl + nextLineLen;
 				return;
 			}
 			cursorID = rightEndl + cursorXPos;
-            return;
+			return;
 }
 
 // Moves the cursor up a line
