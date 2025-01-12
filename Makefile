@@ -9,7 +9,7 @@ all: main
 %.o: %.cpp | %.h
 	$(CXX) $(CXXFLAGS) -c $(^) -o $(@)
 
-main: main.cpp vfNCurse.o shared_memory.o editor.o
+main: main.cpp vfNCurse.o shared_memory.o editor.o file_handler.o
 	$(CXX) $(CXXFLAGS) $(^) -o $(@) $(LDFLAGS)
 
 clean:

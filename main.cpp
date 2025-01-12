@@ -11,6 +11,9 @@
 
 using namespace std;
 
+volatile bool quitFlag = false;
+volatile bool saveFlag = false;
+
 bool readFile(volatile BufferContents* buffer, char *fileName) {
     while(buffer->isBeingAccessed){}
 
@@ -82,10 +85,10 @@ int main(int argc, char *argv[]) {
         cursorIdentity = sharedBuffer->numCursors;
 	    sharedBuffer->cursorPos[sharedBuffer->numCursors++] = 0;
     }
-    
+
     ScreenInfo screen;
 
-    while(true) {
+    while(!quitFlag) {
         while(sharedBuffer->isBeingAccessed){}
         sharedBuffer->isBeingAccessed = true;
         update(sharedBuffer, cursorIdentity);
