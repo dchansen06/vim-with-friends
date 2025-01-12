@@ -111,7 +111,11 @@ void ScreenInfo::printScreen(ScreenBuffer* sb){
         }
         
         // Otherwise, prints out the character
+        if (checkCursor(sb->cursorPos, sb->numCursors)){
+            attron(COLOR_PAIR(HIGHLIGHTING));
+        }
         printChar (chr);
+        attroff(COLOR_PAIR(HIGHLIGHTING));
     }
     refresh();
 }
