@@ -7,8 +7,8 @@
 
 using namespace std;
 
-extern volatile bool quitFlag = false;
-extern volatile bool saveFlag = false;
+volatile bool quitFlag = false;
+volatile bool saveFlag = false;
 
 bool readFile(volatile BufferContents* buffer, char *fileName)
 {
