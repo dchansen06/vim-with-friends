@@ -63,8 +63,8 @@ int main(int argc, char *argv[]) {
     bool isHost;
     volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
     if(isHost) {
-        sharedBuffer->numberOfCursors = 1;
-        sharedBuffer->cursorPosition[0] = 0;
+        sharedBuffer->numCursors = 1;
+        sharedBuffer->cursorPos[0] = 0;
 
         sharedBuffer->isBeingAccessed = false;
         if(!readFile(sharedBuffer, argv[1])){
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
         }
     } else {
         while(sharedBuffer->isBeingAccessed){}
-	    sharedBuffer->cursorPosition[sharedBuffer->numberOfCursors++] = 0;
+	    sharedBuffer->cursorPos[sharedBuffer->numCursors++] = 0;
     }
     
     ScreenInfo screen;

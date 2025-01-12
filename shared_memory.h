@@ -5,9 +5,9 @@
 
 	struct BufferContents {
 		unsigned int size;
-		int numberOfCursors;
-		int cursorPosition[16];	// MAGIC
-        bool isBeingAccessed; // pause all accesses until this is cleared
+		int numCursors;
+		int cursorPos[16];	// MAGIC
+		bool isBeingAccessed; // pause all accesses until this is cleared
 		char content[];
 	};
 

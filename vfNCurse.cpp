@@ -114,7 +114,8 @@ void ScreenInfo::printScreen(BufferContents* bc){
         }
         
         // Otherwise, prints out the character
-        if (checkCursor(bc->cursorPos, bc->numCursors)){
+        for (int j = 0; j < bc->numCursors; j++){
+            if (i == bc->cursorPos[j])
             attron(COLOR_PAIR(HIGHLIGHTING));
         }
         printChar (chr);
@@ -133,15 +134,4 @@ void ScreenInfo::printChar (int chr){
         addch(chr);
         move(myCur.Y, ++myCur.X);
     }
-}
-
-bool ScreenInfo::checkCursor (Cursor cursors[], int numCurs){
-    // Checks each cursor position
-    for (int i = 0; i < numCurs; i++){
-        // If found return true
-       if (myCur.X == cursors[i].X && myCur.Y == cursors[i].Y){
-           return true;
-       }
-    }
-    return false;
 }

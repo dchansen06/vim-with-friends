@@ -21,7 +21,6 @@
 			void initializeScreen(); // Initializes the screen	
 			void displayMode(std::string); // Prints the mode of the editor
 			void printChar(int); // Prints out a char
-			bool checkCursor(Cursor[], int);
 
 
 		public:
