@@ -9,8 +9,7 @@ all: main
 %.o: %.cpp | %.h
 	$(CXX) $(CXXFLAGS) -c $(^) -o $(@)
 
-<<<<<<< HEAD
-main: main.cpp shared_memory.o
+main: main.o shared_memory.o
 	g++ $(^) -o $(@) -lncurses -Wall -Wextra
 
 clean:
