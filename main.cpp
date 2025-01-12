@@ -76,7 +76,5 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if(isHost) {
-        cout << "Closed with code " << unlink(argv[1]) << endl;
-    }
+    unlink(argv[1]);
 }
