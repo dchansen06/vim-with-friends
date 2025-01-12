@@ -37,7 +37,8 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 {
 	const int SIZE = 524288;
 
-	const char* NAME = cleanFilename(filename).c_str();
+	filename = cleanFilename(filename);
+	const char* NAME = filename.c_str();
 
 	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
 
