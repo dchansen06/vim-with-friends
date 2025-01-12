@@ -7,12 +7,12 @@
 
 void insert(char character, volatile BufferContents *bufferContent, int cursorIdentity)
 {
-	for (volatile unsigned long position = bufferContent->size; i >= bufferContent->cursorPos[cursorIdentity]; i--) {
+	for (volatile unsigned long i = bufferContent->size; i >= bufferContent->cursorPos[cursorIdentity]; i--) {
 		bufferContent->size++;
 		bufferContent->content[i+1] = bufferContent->content[i];
 	}
 
-	bufferContent->content[bufferCount->cursorPos[cursorIdentity]] = character;
+	bufferContent->content[bufferContent->cursorPos[cursorIdentity]] = character;
 	bufferContent->cursorPos[cursorIdentity]++;
     // MOVE OTHER CURSORS THAT ARE AFTER
     for (int i = 0; i < 16; i++){
