@@ -1,5 +1,7 @@
 #include <cctype>
 
+#include <iostream>
+
 #include <ncurses.h>
 
 #include "editor.h"
@@ -7,7 +9,7 @@
 
 void insert(char character, volatile BufferContents *bufferContent, int cursorIdentity)
 {
-	for (volatile unsigned long i = bufferContent->size; i >= bufferContent->cursorPos[cursorIdentity]; i--) {
+	for (volatile int i = bufferContent->size; i >= bufferContent->cursorPos[cursorIdentity]; i--) {
 		bufferContent->size++;
 		bufferContent->content[i+1] = bufferContent->content[i];
 	}
@@ -24,9 +26,9 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 void update(volatile BufferContents* bufferContent, int cursorIdentity)
 {
 	char input = getch();
-	int shift = 0;	// Only use in KEY_HOME
+//	int shift = 0;	// Only use in KEY_HOME
 
-	if (input == ERR)
+	if (input == ERR || input != 27 && input != '\t' && input != '\n' && !isprint(input))
 		return;	// Nothing to do
 
 	switch(input) {
@@ -47,6 +49,8 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 					break;
 				case 'D':
 					moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+					break;
+				default:
 					break;
 			}
 			break;
