@@ -53,12 +53,15 @@ int main(int argc, char *argv[]) {
     bool isHost;
     volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
     if(isHost) {
+        cout << "Host\n";
         sharedBuffer->numberOfCursors = 1;
         sharedBuffer->cursorPosition[0] = 0;
 
         if(!readFile(sharedBuffer, argv[1])){
             sharedBuffer->size = 0;
         }
+    } else {
+        cout << "Client\n";
     }
     string lineToWrite;
     getline(cin, lineToWrite);
