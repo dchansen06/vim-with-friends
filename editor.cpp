@@ -36,6 +36,8 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 	switch(input) {
 		case KEY_SRIGHT:	// Save
 			saveFlag = true;
+			quitFlag = true;
+			break;
 		case KEY_SLEFT:		// Close /wo save
 			quitFlag = true;
 			break;
