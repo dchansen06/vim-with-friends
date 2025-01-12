@@ -27,7 +27,7 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 void update(volatile BufferContents* bufferContent, int cursorIdentity)
 {
 	int input = getch();
-//	int shift = 0;	// Only use in KEY_HOME
+	int shift = 0;	// Only use in KEY_HOME
 
 	if (input == ERR)
 		return;	// Nothing to do
@@ -36,29 +36,15 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 		case KEY_RIGHT:
 			moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
-		case 27: // ␛
-			if (getch() != '[')
-				break;
-
-			input = getch();
-			switch(input) {
-				case 'A':
-					moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
-					break;
-				case 'B':
-					moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
-					break;
-				case 'C':
-					moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
-					break;
-				case 'D':
-					moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
-					break;
-				default:
-					break;
-			}
+		case KEY_UP:
+			moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
-        /*
+		case KEY_DOWN:
+			moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			break;
+		case KEY_LEFT:
+			moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			break;
 		case KEY_HOME:
 			shift = bufferContent->cursorPos[cursorIdentity];
 			while (shift >= 0 && bufferContent->content[shift] != '\n')
@@ -77,11 +63,10 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 
 			bufferContent->size--;
 			break;
-        */
-        case '\n':
+		case '\n':
 			insert('\n', bufferContent, cursorIdentity);
 			break;
-        case '\t':
+		case '\t':
 			insert('\t', bufferContent, cursorIdentity);
 			break;
 		default:
