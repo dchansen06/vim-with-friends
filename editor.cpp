@@ -48,6 +48,7 @@ void update(volatile BufferContents* bc, int& cursorID)
 		// Move cursor down
 		case KEY_DOWN:
 			break;
+
 		case KEY_LEFT:
 			bufferContent->cursorPos[cursorIdentity]--;
 			break;
@@ -90,7 +91,8 @@ void update(volatile BufferContents* bc, int& cursorID)
 	}
 }
 
-void moveDown (const int& content[], int size, int& cursorID){
+// Moves the cursor down a line
+void moveDown (volatile char content[], int size, int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int nextLineLen;
 
@@ -126,5 +128,42 @@ void moveDown (const int& content[], int size, int& cursorID){
 				break;
 			}
 			cursorID = rightEndL + cursorXPos;
+			break;
+}
+
+// Moves the cursor up a line
+void moveUp (volatile char content[], int size, int& cursorID){
+			int cursorXPos; // Var to store X position of current cursor
+			int beginAboveLine;
+
+			int beginThisLine = cursorID;
+			
+			// Finds the position of the last \n
+			while (beginThisLine != 0 && content[beginThisLine] != '\n')
+				beginThisLine--;
+			
+			beginThisLine++;
+			// Calculates the x position of the cursor
+			cursorXPos = cursorID - beginThisLine - 1;
+
+			// Runs till the end of current line
+			beginAboveLine = beginThisLine-2;
+			while (content[beginAboveLine] != '\n'){
+				// If already the last, then don't go anywhere
+				if (beginAboveLine == 0){
+					return;
+				}
+
+				beginAboveLine++;
+
+			}
+
+			beginAboveLine++;
+
+			if (cursorXPos > beginThisLine - beginAboveLine){
+				cursorID = beginThisLine - 2;
+				break;
+			}
+			cursorID = beginAboveLine + cursorXPos;
 			break;
 }
