@@ -84,40 +84,41 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int nextLineLen = 0;
 
-			int posLastEndl = cursorID;
-			int rightEndL = cursorID;
+			int beginThisLine = cursorID;
+			int rightEndl = cursorID;
 			
 			// Finds the position of the last \n
-			while (posLastEndl > 0 && content[posLastEndl] != '\n')
-				posLastEndl--;
-			
+			while (beginThisLine >= 0 && content[beginThisLine] != '\n')
+				beginThisLine--;
+			beginThisLine++; // Gets the position of this line
+
 			// Calculates the x position of the cursor
-			cursorXPos = cursorID - posLastEndl - 1;
+			cursorXPos = cursorID - beginThisLine;
 
 			// Runs till the end of current line
-			while (content[rightEndL] != '\n'){
+			while (content[rightEndl] != '\n'){
 
 				// If already the last, then don't go anywhere
-				if (rightEndL >= size){
+				if (rightEndl >= size){
 					return;
 				}
 
-				rightEndL++;
+				rightEndl++;
 
 			}
 
-			rightEndL++;
+			rightEndl++;
 
 			// Gets the size of the next line
-			while (content[rightEndL + nextLineLen] != '\n')
+			while (content[rightEndl + nextLineLen] != '\n')
 				nextLineLen++;
 			
 			
 			if (cursorXPos > nextLineLen){
-				cursorID = rightEndL + nextLineLen;
+				cursorID = rightEndl + nextLineLen;
 				return;
 			}
-			cursorID = rightEndL + cursorXPos;
+			cursorID = rightEndl + cursorXPos;
             return;
 }
 
