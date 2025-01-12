@@ -14,6 +14,14 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 
 	bufferContent->content[bufferCount->cursorPos[cursorIdentity]] = character;
 	bufferCount->cursorPos[cursorIdentity]++;
+    // MOVE OTHER CURSORS THAT ARE AFTER
+    for (int i = 0; i < 16; i++){
+        if (i == cursorIdentity) {
+            continue;
+        }
+
+        bufferContent->cursorPos[i]--;
+    }
 }
 
 void update(volatile BufferContents *bufferContent, int cursorIdentity)
@@ -67,6 +75,13 @@ void update(volatile BufferContents *bufferContent, int cursorIdentity)
 				bufferContent->content[i - 1] = bufferContent->content[i];
 
 			// MOVE OTHER CURSORS THAT ARE AFTER
+            for (int i = 0; i < 16; i++){
+                if (i == cursorIdentity) {
+                    continue;
+                }
+
+                bufferContent->cursorPos[i]--;
+            }
 
 			bufferContent->size--;
 			break;
