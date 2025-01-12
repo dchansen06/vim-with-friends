@@ -121,7 +121,7 @@ void moveDown (volatile char content[], int size, int& cursorID){
 }
 
 // Moves the cursor up a line
-void moveUp (volatile char content[], int size, int& cursorID){
+void moveUp (volatile char content[], int size, volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int beginAboveLine;
 
@@ -151,14 +151,14 @@ void moveUp (volatile char content[], int size, int& cursorID){
 
 			if (cursorXPos > beginThisLine - beginAboveLine){
 				cursorID = beginThisLine - 2;
-				break;
+				return;
 			}
 			cursorID = beginAboveLine + cursorXPos;
-			break;
+            return;
 }
 
 // Move cursor right
-void moveRight (volatile char content[], int size, int& cursorID){
+void moveRight (volatile char content[], int size, volatile int& cursorID){
 	if (cursorID == size){
 		return;
 	}
@@ -166,7 +166,7 @@ void moveRight (volatile char content[], int size, int& cursorID){
 }
 
 // Move cursor left
-void moveLeft (volatile char content[], int size, int& cursorID){
+void moveLeft (volatile char content[], int size, volatile int& cursorID){
 	if (cursorID == 0){
 		return;
 	}
