@@ -102,7 +102,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 			while (content[rightEndl] != '\n'){
 
 				// If already the last, then don't go anywhere
-				if (rightEndl >= size){
+				if (rightEndl >= size-1){
 					return;
 				}
 
