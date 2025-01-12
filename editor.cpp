@@ -123,7 +123,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 }
 
 // Moves the cursor up a line
-void moveUp (volatile char content[], volatile int& cursorID){
+void moveUp (volatile char content[], int size, volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int beginAboveLine;
 
