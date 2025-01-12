@@ -30,12 +30,9 @@ int main(int argc, char *argv[]) {
         sharedBuffer->cursorPos[0] = 0;
 
         sharedBuffer->isBeingAccessed = false;
-        if(!readFile(sharedBuffer, argv[1])){
+        if(!readFile(sharedBuffer, argv[1])) {
             sharedBuffer->size = 1;
 	    sharedBuffer->content[0] = '\n';
-        } else {
-	    if (sharedBuffer->content[sharedBuffer->size-1] != '\n')
-		sharedBuffer->content[++sharedBuffer->size] = '\n';
 	}
     } else {
         while(sharedBuffer->isBeingAccessed){}
