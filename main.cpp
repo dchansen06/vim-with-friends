@@ -61,7 +61,5 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if(isHost) {
-        unlink(argv[1]);
-    }
+    unlink(argv[1]);
 }
