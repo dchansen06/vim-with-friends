@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <filesystem>
 
 #include <unistd.h>
 #include <limits.h>
@@ -14,48 +15,46 @@ using namespace std;
 
 string cleanFilename(string filename)
 {
+	string name = "";
+
 	char buf[PATH_MAX];
 	char* path = realpath(filename.c_str(), buf);
 
-	if (path != nullptr) {
-		return (string)path;
-	} else {
+	if (path == nullptr) {
 		cerr << "Invalid filename given!\n";
 		exit(-1);
 	}
-}
 
-volatile BufferContents* getSharedMemory(string filename, bool &host)
-{
-	string name = "";
-	for (char letter : cleanFilename(filename)) {
+	for (char letter : (string)path) {
 		if (letter == '/')
 			name += '.';
 		else
 			name += letter;
 	}
 
+	return "/tmp/vfNCurse/" + name;
+}
+
+volatile BufferContents* getSharedMemory(string filename, bool &host)
+{
 	const int SIZE = 524288;
-	const char* NAME = ("/tmp" + name).c_str();	// Later mkdir so that we can /tmp/vim-with-friends/
 
-	int shm = shm_open(NAME, O_RDWR, 0666);
-	cout << "SHM: " << shm << " should be >=0 for client\n";
-	if (shm >= 0) {
-		shm_unlink(NAME);
+	const char* NAME = cleanFilename(filename).c_str();
 
+	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
+
+	if (EEXIST != errno) {
+		host = true;
+		ftruncate(shm, SIZE);
+		return (volatile BufferContents*)mmap(0, SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, shm, 0);
+	} else {
 		host = false;
 		shm = shm_open(NAME, O_RDWR, 0666);
-
-		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
-	} else {
-		host = true;
-
-		shm = shm_open(NAME, O_CREAT | O_RDWR, 0666);
-		ftruncate(shm, SIZE);
-
-		if (shm >= 0)
-			return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
+		return (volatile BufferContents*)mmap(0, SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, shm, 0);
 	}
+}
 
-	return nullptr;
+int unlink(std::string filename)
+{
+	return shm_unlink(cleanFilename(filename).c_str());
 }
