@@ -8,5 +8,5 @@
 	void moveUp (volatile char content[], int size, int& cursorID);
 	void moveRight (volatile char content[], int size, int& cursorID);
 	void moveLeft (volatile char content[], int size, int& cursorID);
-	void update(volatile BufferContents* bufferContent, int& cursorIdentity)
+	void update(volatile BufferContents* bufferContent, int& cursorIdentity);
 #endif

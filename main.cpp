@@ -7,6 +7,7 @@
 #include "shared_memory.h"
 #include "vfNCurse.h"
 #include "editor.h"
+#include "unistd.h"
 
 using namespace std;
 
@@ -82,8 +83,13 @@ int main(int argc, char *argv[]) {
     ScreenInfo screen;
 
     while(true) {
+        while(sharedBuffer->isBeingAccessed){}
+        sharedBuffer->isBeingAccessed = true;
         update(sharedBuffer, cursorIdentity);
         screen.printScreen(sharedBuffer);
+        sharedBuffer->isBeingAccessed = false;
+
+        usleep(16667);
     }
 
 
