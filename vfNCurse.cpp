@@ -59,6 +59,9 @@ void ScreenInfo::initializeScreen(){
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
 void ScreenInfo::printScreen(volatile BufferContents* bc){
+	curY = 0;
+	curX = 0;
+	move(curY, curX);
     // Runs through the contents of the buffer, printing them to the screen
     for(volatile unsigned long long i = 0; i < bc->size; i++){
         int chr = bc->content[i]; // Get the character form the array
@@ -71,7 +74,7 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
                 }
                 continue;
             case '\n':
-                if(curY >= LINES){
+                if(curY >= LINES - 1){
                     goto leaveLoop;
                 }
                 curX = 0;
@@ -81,12 +84,12 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
         }
         
         // Otherwise, prints out the character
-        for (volatile int j = 0; j < bc->numCursors; j++){
-            if ((int)i == bc->cursorPos[j])
-            attron(COLOR_PAIR(HIGHLIGHTING));
-        }
+//        for (volatile int j = 0; j < bc->numCursors; j++){
+//            if ((int)i == bc->cursorPos[j])
+//            attron(COLOR_PAIR(HIGHLIGHTING));
+//        }
         printChar (chr);
-        attroff(COLOR_PAIR(HIGHLIGHTING));
+//        attroff(COLOR_PAIR(HIGHLIGHTING));
     }
 leaveLoop:
     refresh();
