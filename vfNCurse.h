@@ -18,7 +18,7 @@
 			Cursor printingCur;
 
 			// Helper Functions
-			void initializeScreen(); // Initializes the screen	
+			void initializeScreen(); // Initializes the screen
 			void displayMode(std::string); // Prints the mode of the editor
 			void printChar(int); // Prints out a char
 
