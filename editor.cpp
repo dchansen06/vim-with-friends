@@ -50,6 +50,7 @@ void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 					break;
 			}
 			break;
+        /*
 		case KEY_HOME:
 			shift = bufferContent->cursorPos[cursorIdentity];
 			while (shift >= 0 && bufferContent->content[shift] != '\n')
@@ -68,10 +69,11 @@ void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 
 			bufferContent->size--;
 			break;
-		case KEY_ENTER:
+        */
+        case '\n':
 			insert('\n', bufferContent, cursorIdentity);
 			break;
-		case KEY_TAB:
+        case '\t':
 			insert('\t', bufferContent, cursorIdentity);
 			break;
 		default:
@@ -115,10 +117,10 @@ void moveDown (volatile char content[], int size, int& cursorID){
 			
 			if (cursorXPos > nextLineLen){
 				cursorID = rightEndL + nextLineLen;
-				break;
+                return;
 			}
 			cursorID = rightEndL + cursorXPos;
-			break;
+            return;
 }
 
 // Moves the cursor up a line
