@@ -10,7 +10,7 @@ void insert(char character, volatile BufferContents *bufferContent)
 
 }
 
-void update(volatile BufferContents* bc, int cursorId)
+void update(volatile BufferContents* bc, int& cursorID)
 {
     char input;
 	switch(input = getch()) {
@@ -28,29 +28,9 @@ void update(volatile BufferContents* bc, int cursorId)
 
 		// Move cursor down
 		case KEY_DOWN:
-			if ()
-			int cursorXPos; // Var to store X position of current cursor
-			int nextLineLen = 0;
-
-			int runBack = cursorID;
-			int runForward = cursorID;
-			
-			// Finds the position of the last \n
-			while (runBack != 0 && bc->content[runBack] != '\n')
-				runBack--;
-			
-			// Calculates the x position of the cursor
-			cursorXPos = cursorID - runBack;
-
-			
 
 
 
-			while(offsetToRight <= bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent[bufferContent->cursorPos[cursorIdentity] + offsetToRight] != '\n')
-				offsetToRight++;
-
-			cursorPos += offsetToLeft + offsetToRight;
-			break;
 		case KEY_LEFT:
 			cursorPos[cursorIdentity]--;
 			break;
@@ -81,4 +61,43 @@ void update(volatile BufferContents* bc, int cursorId)
 				insert(input, bufferContent);
 			break;
 	}
+}
+
+void moveDown (const int& content[], int size, int& cursorID){
+			int cursorXPos; // Var to store X position of current cursor
+			int nextLineLen;
+
+			int posLastEndl = cursorID;
+			int rightEndL = cursorID;
+			
+			// Finds the position of the last \n
+			while (posLastEndl != 0 && content[posLastEndl] != '\n')
+				posLastEndl--;
+			
+			// Calculates the x position of the cursor
+			cursorXPos = cursorID - posLastEndl;
+
+			// Runs till the end of current line
+			while (content[rightEndL] != '\n'){
+
+				// If already the last, then don't go anywhere
+				if (rightEndL == size){
+					return;
+				}
+
+				rightEndL++;
+
+			}
+
+			// Gets the size of the next line
+			while (content[rightEndL + nextLineLen] != '\n')
+				nextLineLen++;
+			
+			
+			if (cursorXPos > nextLineLen){
+				cursorID = rightEndL + nextLineLen;
+				break;
+			}
+			cursorID = rightEndL + cursorXPos;
+			break;
 }
