@@ -17,15 +17,15 @@ ScreenInfo::ScreenInfo(){
     initializeScreen();
 
     // Initialize cursor
-    myCur.X = 0;
-    myCur.Y = 0;
+    printingCur.X= 0;
+    printingCur.Y = 0;
 
 }
 
 // Displays the current mode of the editor
 void ScreenInfo::displayMode(string mode){
     mvprintw(LINES-2, 0, mode.c_str()); // Prints out the mode
-    move(myCur.Y, myCur.X); // Puts cursor back where it goes
+    move(printingCur.Y, printingCur.X); // Puts cursor back where it goes
 }
 
 // Initializes the screen
@@ -60,41 +60,10 @@ void ScreenInfo::initializeScreen(){
     curs_set(0);
 }
 
-// Precondition: takes in a character for cursor movement
-// Postcondition: moves the cursor based on the input
-void ScreenInfo::moveCursor (int chr){
-    switch (chr){
-        // Move Up
-        case KEY_UP:
-            if (myCur.Y != 0)
-                myCur.Y--;
-            break;
-
-        // Move down
-        case KEY_DOWN:
-            if(myCur.Y != LINES-3)
-                myCur.Y++;
-            break;
-
-        // Move right
-        case KEY_RIGHT:
-            if (myCur.X != COLS - 1)
-                myCur.X++;
-            break;
-
-        // Move left
-        case KEY_LEFT:
-            if (myCur.X != 0)
-                myCur.X--;
-            break;
-    }
-    move(myCur.Y, myCur.X);
-}
-
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
 void ScreenInfo::printScreen(BufferContents* bc){
-    myCur.X = myCur.Y = 0;
+    printingCur.X = printingCur.Y = 0;
     // Runs through the contents of the buffer, printing them to the screen
     for(size_t i = 0; i < bc->size; i++){
         int chr = bc->content[i]; // Get the character form the array
@@ -107,12 +76,12 @@ void ScreenInfo::printScreen(BufferContents* bc){
                 }
                 continue;
             case '\n':
-                if(myCur.Y >= LINES){
+                if(printingCur.Y >= LINES){
                     goto leaveLoop;
                 }
-                myCur.X = 0;
-                myCur.Y++;
-                move(myCur.Y, myCur.X);
+                printingCur.X = 0;
+                printingCur.Y++;
+                move(printingCur.Y, printingCur.X);
                 continue;
         }
         
@@ -133,8 +102,8 @@ leaveLoop:
 void ScreenInfo::printChar (int chr){
     // Print out the character
     // Move the cursor over
-    if (myCur.X != COLS - 1) {
+    if (printingCur.X != COLS - 1) {
         addch(chr);
-        move(myCur.Y, ++myCur.X);
+        move(printingCur.Y, ++printingCur.X);
     }
 }

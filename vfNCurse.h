@@ -15,7 +15,7 @@
 		
 		private:
 			// Cursor Object storing position of users cursor
-			Cursor myCur;
+			Cursor printingCur;
 
 			// Helper Functions
 			void initializeScreen(); // Initializes the screen	
