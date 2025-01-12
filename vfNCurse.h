@@ -14,24 +14,35 @@
 	struct ScreenBuffer {
 		unsigned long long size;
 		int numberOfCursors;
-		int cursorPosition[16];	// Magic
+		Cursor cursorPos[16];	// Magic
 		char content[];
 	};
 
-	// Precondition: takes in a character for cursor movement
-	// Postcondition: moves the cursor based on the input
-	void moveCursor (int chr, Cursor& cursor);
+	class ScreenInfo {
+		
+		private:
+			// Cursor Object storing position of users cursor
+			Cursor myCur;
 
-	// Initializes ncurses
-	void initializeScreen();
+			// Helper Functions
+			void initializeScreen(); // Initializes the screen	
+			void displayMode(std::string); // Prints the mode of the editor
+			void printChar(int); // Prints out a char
 
-	// Precondition: takes in the current mode of the editor and the cursor object
-	// Postcondition: displays the current mode of the editor
-	void displayMode(std::string, Cursor);
 
-	// Precondition: takes in a reference to the screen buffer
-	// Postcondition: prints it out to the screen
-	void printScreen(ScreenBuffer& sb, Cursor);
+		public:
+			
+			// Constructor
+			ScreenInfo();
+
+			// Precondition: takes in a character for cursor movement
+			// Postcondition: moves the cursor based on the input
+			void moveCursor (int chr);
+			
+			// Precondition: takes in a reference to the screen buffer
+			// Postcondition: prints it out to the screen
+			void printScreen(ScreenBuffer* sb);
+			};
 
 	void vfNCurse();
 
