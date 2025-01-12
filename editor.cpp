@@ -21,7 +21,7 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 	}
 }
 
-void update(volatile BufferContents* bufferContent, int& cursorIdentity)
+void update(volatile BufferContents* bufferContent, int cursorIdentity)
 {
 	char input = getch();
 	int shift = 0;	// Only use in KEY_HOME
@@ -84,7 +84,7 @@ void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 }
 
 // Moves the cursor down a line
-void moveDown (volatile char content[], int size, int& cursorID){
+void moveDown (volatile char content[], int size, volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int nextLineLen;
 
