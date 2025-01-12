@@ -66,11 +66,9 @@ int main(int argc, char *argv[]) {
             sharedBuffer->size = 0;
         }
         sharedBuffer->isBeingAccessed = false;
+    } else {
+	    sharedBuffer->cursorPosition[sharedBuffer->numberOfCursors++] = 0;
     }
 
-//    if(isHost) {
-	errno = 0;
-      cout << "Unlink " << unlink(argv[1]) << endl;
-	cout << "Errno " << errno << endl;
-//    }
+    unlink(argv[1]);
 }
