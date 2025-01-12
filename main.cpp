@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     if(isHost) {
         cursorIdentity = 0;
         sharedBuffer->numCursors = 1;
-        sharedBuffer->cursorPos[0] = 5;
+        sharedBuffer->cursorPos[0] = 0;
 
         sharedBuffer->isBeingAccessed = false;
         if(!readFile(sharedBuffer, argv[1])){
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         screen.printScreen(sharedBuffer);
         sharedBuffer->isBeingAccessed = false;
 
-        usleep(33333);
+        usleep(16667);
     }
 	endwin();
 
