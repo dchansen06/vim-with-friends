@@ -41,7 +41,7 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 {
 	const int SIZE = 524288;
 
-	filename = "/" + cleanFilename(filename);
+	filename = "/tmp" + cleanFilename(filename);
 	const char* NAME = filename.c_str();
 
 	errno = 0;
