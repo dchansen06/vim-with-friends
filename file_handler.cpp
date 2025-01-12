@@ -29,6 +29,7 @@ bool readFile(volatile BufferContents* buffer, char *fileName)
 		buffer->content[i] = ch;
 		inFile.get(ch);
 	}
+
 	buffer->size = i;
 	inFile.close();
 	buffer->isBeingAccessed = false;
