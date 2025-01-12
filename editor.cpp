@@ -21,7 +21,7 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 	}
 }
 
-void update(volatile BufferContents* bc, int& cursorID)
+void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 {
 	char input = getch();
 
@@ -31,31 +31,7 @@ void update(volatile BufferContents* bc, int& cursorID)
 	switch(input) {
 		case 27: // ␛
 			// SPECIAL U/D/L/R HOME BACKSPACE
-		case KEY_UP:
-			;
-			int offsetToLeft = 0;
-			while (offsetToLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft] != '\n')
-				offsetToLeft++;
-
-			int lineLengthAbove = 0;
-			while(offsetToLeft + lineLengthAbove > bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft - lineLengthAbove] != '\n')
-				lineLengthAbove++;
-
-			bufferContent->cursorPos[cursorIdentity] -= lineLengthAbove;
-			break;
-
-		// Move cursor down
-		case KEY_DOWN:
-			break;
-
-		case KEY_LEFT:
-			bufferContent->cursorPos[cursorIdentity]--;
-			break;
-		case KEY_RIGHT:
-			bufferContent->cursorPos[cursorIdentity]++;
-			break;
 		case KEY_HOME:
-			;
 			int shift = bufferContent->cursorPos[cursorIdentity];
 			while (shift >= 0 && bufferContent->content[shift] != '\n')
 				shift--;
@@ -162,3 +138,20 @@ void moveUp (volatile char content[], int size, int& cursorID){
 			cursorID = beginAboveLine + cursorXPos;
 			break;
 }
+
+// Move cursor right
+void moveRight (volatile char content[], int size, int& cursorID){
+	if (cursorID == size){
+		return;
+	}
+	cursorID++;
+}
+
+// Move cursor left
+void moveLeft (volatile char content[], int size, int& cursorID){
+	if (cursorID == 0){
+		return;
+	}
+	cursorID--;
+}
+
