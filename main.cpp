@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         cout << "Too few arguments.\n";
         return 1;
     }
-    
+
     bool isHost;
     volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
     if(isHost) {
@@ -60,6 +60,4 @@ int main(int argc, char *argv[]) {
             sharedBuffer->size = 0;
         }
     }
-
-
 }
