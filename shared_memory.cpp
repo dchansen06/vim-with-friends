@@ -1,12 +1,12 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+
 #include <unistd.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
-#include <cstdio>
-#include <string>
-#include <cstdlib>
-#include <fstream>
+
+#include <sys/mman.h>
 
 #include "shared_memory.h"
 
@@ -14,11 +14,15 @@ using namespace std;
 
 string cleanFilename(string filename)
 {
-	const char* file = filename.c_str();
-	char* output = realpath(file, new char[PATH_MAX + 1]);
-	string out = output;
-	delete output;
-	return out;
+	char buf[PATH_MAX];
+	char* path = realpath(filename.c_str(), buf);
+
+	if (path != nullptr) {
+		return (string)path;
+	} else {
+		cerr << "Invalid filename given!\n";
+		exit(-1);
+	}
 }
 
 volatile BufferContents* getSharedMemory(string filename, bool &host)
@@ -32,14 +36,15 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	}
 
 	const int SIZE = 524288;
-	const char* NAME = name.c_str();
+	const char* NAME = ("/tmp" + name).c_str();	// Later mkdir so that we can /tmp/vim-with-friends/
 
 	int shm = shm_open(NAME, O_RDWR, 0666);
+	cout << "SHM: " << shm << " should be >=0 for client\n";
 	if (shm >= 0) {
 		shm_unlink(NAME);
 
 		host = false;
-		shm = shm_open(NAME, O_RDWR, 066);
+		shm = shm_open(NAME, O_RDWR, 0666);
 
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
