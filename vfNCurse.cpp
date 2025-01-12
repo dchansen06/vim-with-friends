@@ -55,6 +55,9 @@ void ScreenInfo::initializeScreen(){
     }
     start_color(); // Initializes color
     init_pair(HIGHLIGHTING, COLOR_BLACK, COLOR_WHITE); // Associates HIGHLIGHTING to black on white
+
+    // Hides the real cursor
+    curs_set(0);
 }
 
 // Precondition: takes in a character for cursor movement
