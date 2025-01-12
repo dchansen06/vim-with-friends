@@ -15,10 +15,9 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
     if (argc == 3) {	// ./main unlink <file>
-	unlinkFile(argv[2]);
-	return 2;
-    } else if(argc < 2) {
-        cout << "Too few arguments.\n";
+	return unlinkFile(argv[2]);
+    } else if(argc < 2 || argc > 3) {
+        cout << "Usage:\n\t./main [file]\n\t./main unlink [file]\n\nUse arrow keys to navigate\nshift + left arrow to quit without saving\nshift + right arrow to save and quit\n";
         return 1;
     }
 
