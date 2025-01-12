@@ -17,10 +17,12 @@ string cleanFilename(string filename)
 	char buf[PATH_MAX];
 	char* path = realpath(filename.c_str(), buf);
 
-	if (path != nullptr)
+	if (path != nullptr) {
 		return (string)path;
-	else
-		return "/tmp/broken.txt";
+	} else {
+		cerr << "Invalid filename given!\n";
+		exit(-1);
+	}
 }
 
 volatile BufferContents* getSharedMemory(string filename, bool &host)
