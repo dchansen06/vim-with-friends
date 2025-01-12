@@ -7,7 +7,7 @@
 
 void insert(char character, volatile BufferContents *bufferContent)
 {
-
+	
 }
 
 void update(volatile BufferContents *bufferContent, int cursorIdentity)
@@ -59,6 +59,8 @@ void update(volatile BufferContents *bufferContent, int cursorIdentity)
 		case KEY_BACKSPACE:
 			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
 				bufferContent->content[i - 1] = bufferContent->content[i];
+
+			// MOVE OTHER CURSORS THAT ARE AFTER
 
 			bufferContent->size--;
 			break;
