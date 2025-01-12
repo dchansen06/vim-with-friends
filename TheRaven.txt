@@ -1,18 +1,5 @@
 						The Raven
 
-We can edit text, and add any where
-
-... Shifting Including
-
-.. And multiple people in one document working together and saving resources
-
-because compute power is expensive and so is network transmissions
-anyone over an SSH connection can read and write to a file with granted permissions
-and updates are as conservative as possible for the least lag possible
-We are excited that you can Collaborate with up to 16 people at once!
-
-We hope you like vim-with-friends!
-
 Once upon a midnight dreary, while I pondered, weak and weary,
 Over many a quaint and curious volume of forgotten lore—
     While I nodded, nearly napping, suddenly there came a tapping,
