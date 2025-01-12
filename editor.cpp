@@ -131,10 +131,19 @@ void moveUp (volatile char content[], int size, volatile int& cursorID){
 			int beginAboveLine;
 
 			int beginThisLine = cursorID;
-			
-			// Finds the position of the last \n
-			while (beginThisLine != 0 && content[beginThisLine] != '\n')
+		
+			if (content[beginThisLine] == '\n'){
 				beginThisLine--;
+			}
+			// Finds the position of the last \n
+			while (content[beginThisLine] != '\n'){
+				
+				if (beginThisLine == 0){
+					return;
+				}
+
+				beginThisLine--;
+			}
 			
 			beginThisLine++;
 			// Calculates the x position of the cursor
@@ -142,13 +151,9 @@ void moveUp (volatile char content[], int size, volatile int& cursorID){
 
 			// Runs till the end of current line
 			beginAboveLine = beginThisLine-2;
-			while (content[beginAboveLine] != '\n'){
-				// If already the last, then don't go anywhere
-				if (beginAboveLine == 0){
-					return;
-				}
+			while (beginAboveLine >= 0 && content[beginAboveLine] != '\n'){
 
-				beginAboveLine++;
+				beginAboveLine--;
 
 			}
 
@@ -159,7 +164,7 @@ void moveUp (volatile char content[], int size, volatile int& cursorID){
 				return;
 			}
 			cursorID = beginAboveLine + cursorXPos;
-            return;
+			return;
 }
 
 // Move cursor right
