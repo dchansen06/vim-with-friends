@@ -44,7 +44,7 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			moveRight(bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_UP:
-			moveUp(bufferContent->content, bufferContent->cursorPos[cursorIdentity]);
+			moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_DOWN:
 			moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
