@@ -11,59 +11,6 @@ using namespace std;
 // Define Statements
 #define HIGHLIGHTING 1
 
-void vfNCurse(){
-
-    // Creates cursor object, string to store current mode
-    Cursor cur = {0, 0};
-    string mode = "NORMAL";
-    bool quit = false;
-
-    int chr = 'a';
-    while (!quit){
-        // Displays the mode
-        displayMode(mode, cur);
-
-        // Gets user input
-        chr = getch();
-
-        // Moves cursor if needed
-        moveCursor(chr, cur);
-
-        // Deals with commands in normal mode
-        if (!(mode == "INSERT" && chr == '0')){
-            moveCursor(chr, cur);
-        }
-
-        if (mode == "NORMAL"){
-            switch (chr){
-                case 'i':
-                    mode = "INSERT";
-                    break;
-                case 'q':
-                    quit = true;
-                    break;
-                case '0':
-                    cur.X = 0;
-                    move(cur.Y, cur.X);
-                    break;
-            }
-        
-        // Writes in insert mode
-        } else if (mode == "INSERT"){
-            if (chr == 27){
-                mode = "NORMAL";
-            } else if (chr < 256){
-                attron(COLOR_PAIR(HIGHLIGHTING)); // Start highlighting
-
-            }
-        }
-
-        refresh();
-    }
-
-    endwin();
-}
-
 // Constructor
 ScreenInfo::ScreenInfo(){
     // Initializes the screen
@@ -146,6 +93,7 @@ void ScreenInfo::moveCursor (int chr){
 void ScreenInfo::printScreen(ScreenBuffer* sb){
     // Runs through the contents of the buffer, printing them to the screen
     for(size_t i = 0; i < sb->size; i++){
+        refresh();
         int chr = sb->content[i]; // Get the character form the array
         
         // Check for escape characters
@@ -165,6 +113,7 @@ void ScreenInfo::printScreen(ScreenBuffer* sb){
         // Otherwise, prints out the character
         printChar (chr);
     }
+    refresh();
 }
 
 ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
