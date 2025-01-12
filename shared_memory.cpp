@@ -51,18 +51,20 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	if (EEXIST != errno && shm >= 0) {
 		host = true;
 		ftruncate(shm, SIZE);
+		cout << "Host " << host << endl;
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
-	} else if (shm >= 0) {
+	} else if (EEXIST == errno) {
 		host = false;
 		shm = shm_open(NAME, O_RDWR, 0666);
+		cout << "Host " << host << endl;
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
-		cerr << "Something went wrong horribly!\n";
+		cerr << "Something went bad!\n";
 		exit(-1);
 	}
 }
 
 int unlink(std::string filename)
 {
-	return shm_unlink(cleanFilename(filename).c_str());
+	return shm_unlink(("/" + cleanFilename(filename)).c_str());
 }
