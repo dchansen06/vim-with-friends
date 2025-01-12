@@ -84,7 +84,7 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
                 for (int i = 0; i < 3; i++){
                     printChar (' ');
                 }
-		break;
+		continue;
             case '\n':
                 if(curY >= LINES - 1){
                     goto leaveLoop;

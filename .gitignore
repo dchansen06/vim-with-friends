@@ -34,3 +34,4 @@ main
 
 # Generic text files
 *.txt
+!TheRaven.txt
