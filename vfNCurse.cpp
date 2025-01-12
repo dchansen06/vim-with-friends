@@ -134,7 +134,7 @@ bool ScreenInfo::checkCursor (Cursor cursors[], int numCurs){
     // Checks each cursor position
     for (int i = 0; i < numCurs; i++){
         // If found return true
-       if (myCur == cursors[i]){
+       if (myCur.X == cursors[i].X && myCur.Y == cursors[i].Y){
            return true;
        }
     }
