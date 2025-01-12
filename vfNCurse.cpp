@@ -61,6 +61,7 @@ void ScreenInfo::initializeScreen(){
 void ScreenInfo::printScreen(volatile BufferContents* bc){
 	curY = 0;
 	curX = 0;
+    bool double
 	move(curY, curX);
     // Runs through the contents of the buffer, printing them to the screen
     for(volatile unsigned long long i = 0; i < bc->size; i++){
@@ -77,6 +78,11 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
                 if(curY >= LINES - 1){
                     goto leaveLoop;
                 }
+                if ((int)i == bc->cursorPos[j]){
+                    attron(COLOR_PAIR(HIGHLIGHTING));
+                    printChar(' ');
+                }
+
                 curX = 0;
                 curY++;
                 move(curY, curX);
