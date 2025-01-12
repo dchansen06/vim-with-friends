@@ -34,7 +34,7 @@
 			
 			// Precondition: takes in a reference to the screen buffer
 			// Postcondition: prints it out to the screen
-			void printScreen(BufferContents* bc);
+			void printScreen(volatile BufferContents* bc);
 			};
 
 	void vfNCurse();

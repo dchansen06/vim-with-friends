@@ -6,6 +6,7 @@
 
 #include "shared_memory.h"
 #include "vfNCurse.h"
+#include "editor.h"
 
 using namespace std;
 
@@ -62,7 +63,9 @@ int main(int argc, char *argv[]) {
 
     bool isHost;
     volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
+    int cursorIdentity;
     if(isHost) {
+        cursorIdentity = 0;
         sharedBuffer->numCursors = 1;
         sharedBuffer->cursorPos[0] = 0;
 
@@ -72,13 +75,15 @@ int main(int argc, char *argv[]) {
         }
     } else {
         while(sharedBuffer->isBeingAccessed){}
+        cursorIdentity = sharedBuffer->numCursors;
 	    sharedBuffer->cursorPos[sharedBuffer->numCursors++] = 0;
     }
     
     ScreenInfo screen;
 
     while(true) {
-        screen.printScreen((BufferContents*)sharedBuffer);
+        update(sharedBuffer, cursorIdentity);
+        screen.printScreen(sharedBuffer);
     }
 
 
