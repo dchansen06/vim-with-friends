@@ -48,7 +48,7 @@ void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 					moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPosition[cursorIdentity]);
 					break;
 			}
-
+			break;
 		case KEY_HOME:
 			int shift = bufferContent->cursorPos[cursorIdentity];
 			while (shift >= 0 && bufferContent->content[shift] != '\n')
