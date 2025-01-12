@@ -62,6 +62,8 @@ int main(int argc, char *argv[]) {
     }
 
 //    if(isHost) {
-        unlink(argv[1]);
+	errno = 0;
+      cout << "Unlink " << unlink(argv[1]) << endl;
+	cout << "Errno " << errno << endl;
 //    }
 }
