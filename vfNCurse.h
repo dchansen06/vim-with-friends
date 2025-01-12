@@ -7,6 +7,9 @@
 #ifndef VFNCURSE_H
 	#define VFNCURSE_H
 	struct Cursor {
+		int position; // Position in the content array
+
+		// XY position on the screen
 		int X;
 		int Y;
 	};
@@ -35,7 +38,11 @@
 			// Precondition: takes in a reference to the screen buffer
 			// Postcondition: prints it out to the screen
 			void printScreen(volatile BufferContents* bc);
-			};
+
+			// Returns the number of lines on the screen
+			int getLines();
+
+	};
 
 	void vfNCurse();
 #endif

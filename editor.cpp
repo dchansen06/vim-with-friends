@@ -10,7 +10,7 @@ void insert(char character, volatile BufferContents *bufferContent)
 
 }
 
-void update(volatile BufferContents *bufferContent, int cursorIdentity)
+void update(volatile BufferContents* bc, int cursorId)
 {
     char input;
 	switch(input = getch()) {
@@ -25,10 +25,26 @@ void update(volatile BufferContents *bufferContent, int cursorIdentity)
 
 			cursorPos[cursorIdentity] -= lineLengthAbove;
 			break;
+
+		// Move cursor down
 		case KEY_DOWN:
-			int offsetToLeft = 0, offsetToRight = 0;
-			while (offsetToLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft] != '\n')
-				offsetToLeft++;
+			if ()
+			int cursorXPos; // Var to store X position of current cursor
+			int nextLineLen = 0;
+
+			int runBack = cursorID;
+			int runForward = cursorID;
+			
+			// Finds the position of the last \n
+			while (runBack != 0 && bc->content[runBack] != '\n')
+				runBack--;
+			
+			// Calculates the x position of the cursor
+			cursorXPos = cursorID - runBack;
+
+			
+
+
 
 			while(offsetToRight <= bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent[bufferContent->cursorPos[cursorIdentity] + offsetToRight] != '\n')
 				offsetToRight++;
