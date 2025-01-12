@@ -43,7 +43,7 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 		shm_unlink(NAME);
 
 		host = false;
-		shm = shm_open(NAME, O_RDWR, 066);
+		shm = shm_open(NAME, O_RDWR, 0666);
 
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
