@@ -14,14 +14,11 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 
 	bufferContent->content[bufferContent->cursorPos[cursorIdentity]] = character;
 	bufferContent->cursorPos[cursorIdentity]++;
-    // MOVE OTHER CURSORS THAT ARE AFTER
-    for (int i = 0; i < 16; i++){
-        if (i == cursorIdentity) {
-            continue;
-        }
 
-        bufferContent->cursorPos[i]--;
-    }
+	for (int i = 0; i < 16; i++) {
+		if (bufferContent->cursorPos[i] > bufferContent->cursorPos[cursorIdentity])
+			bufferContent->cursorPos[i]--;
+	}
 }
 
 void update(volatile BufferContents* bc, int& cursorID)
@@ -32,6 +29,8 @@ void update(volatile BufferContents* bc, int& cursorID)
 		return;	// Nothing to do
 
 	switch(input) {
+		case 27: // ␛
+			// SPECIAL U/D/L/R HOME BACKSPACE
 		case KEY_UP:
 			;
 			int offsetToLeft = 0;
@@ -67,14 +66,10 @@ void update(volatile BufferContents* bc, int& cursorID)
 			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
 				bufferContent->content[i - 1] = bufferContent->content[i];
 
-			// MOVE OTHER CURSORS THAT ARE AFTER
-            for (int i = 0; i < 16; i++){
-                if (i == cursorIdentity) {
-                    continue;
-                }
-
-                bufferContent->cursorPos[i]--;
-            }
+			for (int i = 0; i < 16; i++) {
+				if (bufferContent->cursorPos[i] > bufferContent->cursorPos[cursorIdentity])
+					bufferContent->cursorPos[i]--;
+			}
 
 			bufferContent->size--;
 			break;
