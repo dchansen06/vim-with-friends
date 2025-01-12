@@ -43,7 +43,7 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			moveRight(bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_UP:
-			moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			moveUp(bufferContent->content, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_DOWN:
 			moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
@@ -125,7 +125,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 }
 
 // Moves the cursor up a line
-void moveUp (volatile char content[], int size, volatile int& cursorID){
+void moveUp (volatile char content[], volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int beginAboveLine;
 
@@ -149,6 +149,11 @@ void moveUp (volatile char content[], int size, volatile int& cursorID){
 			cursorXPos = cursorID - beginThisLine;
 
 			// Runs till the end of current line
+			if (content[beginThisLine-1] == '\n' && content[beginThisLine-2] == '\n'){
+				cursorID = beginThisLine-1;
+				return;
+			}
+
 			beginAboveLine = beginThisLine-2;
 			while (beginAboveLine >= 0 && content[beginAboveLine] != '\n'){
 
