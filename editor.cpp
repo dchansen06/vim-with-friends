@@ -14,14 +14,11 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 
 	bufferContent->content[bufferContent->cursorPos[cursorIdentity]] = character;
 	bufferContent->cursorPos[cursorIdentity]++;
-    // MOVE OTHER CURSORS THAT ARE AFTER
-    for (int i = 0; i < 16; i++){
-        if (i == cursorIdentity) {
-            continue;
-        }
 
-        bufferContent->cursorPos[i]--;
-    }
+	for (int i = 0; i < 16; i++){
+		if (bufferContent->cursorPos[i] > bufferContent->cursorPos[cursorIdentity])
+			bufferContent->cursorPos[i]--;
+	}
 }
 
 void update(volatile BufferContents* bc, int& cursorID)
