@@ -34,8 +34,9 @@ int main(int argc, char *argv[]) {
             sharedBuffer->size = 1;
 	    sharedBuffer->content[0] = '\n';
         } else {
-	    if (sharedBuffer->content[size-1] != '\n')
-		sharedBuffer->content[++size] == '\n';
+	    if (sharedBuffer->content[sharedBuffer->size-1] != '\n')
+		sharedBuffer->content[++sharedBuffer->size] = '\n';
+	}
     } else {
         while(sharedBuffer->isBeingAccessed){}
         cursorIdentity = sharedBuffer->numCursors;
