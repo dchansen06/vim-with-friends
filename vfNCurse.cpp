@@ -12,7 +12,7 @@ using namespace std;
 #define HIGHLIGHTING 1
 
 // Helper Functions
-void printChar (int, Cursor);
+void printChar (int, Cursor&);
 
 void vfNCurse(){
 
@@ -160,7 +160,7 @@ ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
 }
 
 // Print a single character
-void printChar (int chr, Cursor cur){
+void printChar (int chr, Cursor& cur){
     // Print out the character
     addch(chr);
     // Move the cursor over
