@@ -114,10 +114,15 @@ void ScreenInfo::printScreen(BufferContents* bc){
         }
         
         // Otherwise, prints out the character
+        if (checkCursor(bc->cursorPos, bc->numCursors)){
+            attron(COLOR_PAIR(HIGHLIGHTING));
+        }
         printChar (chr);
+        attroff(COLOR_PAIR(HIGHLIGHTING));
     }
 leaveLoop:
     refresh();
+    
 }
 
 // Print a single character
