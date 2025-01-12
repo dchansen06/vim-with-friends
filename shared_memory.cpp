@@ -39,7 +39,7 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	const char* NAME = ("/tmp" + name).c_str();	// Later mkdir so that we can /tmp/vim-with-friends/
 
 	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
-	cout << "SHM: " << shm << " should be >=0 for client\n";
+	cout << "SHM: " << shm << " should be >=0 for host\n";
 	if (shm >= 0) {
 		host = true;
 		ftruncate(shm, SIZE);
