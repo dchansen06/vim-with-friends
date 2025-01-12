@@ -1,13 +1,12 @@
 #include <iostream>
+#include <string>
+#include <fstream>
+
 #include <unistd.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
-#include <cstdio>
-#include <string>
-#include <cstdlib>
-#include <fstream>
+
+#include <sys/mman.h>
 
 #include "shared_memory.h"
 
@@ -37,14 +36,14 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	}
 
 	const int SIZE = 524288;
-	const char* NAME = name.c_str();
+	const char* NAME = ("/tmp/" + name[1]).c_str();
 
 	int shm = shm_open(NAME, O_RDWR, 0666);
 	if (shm >= 0) {
 		shm_unlink(NAME);
 
 		host = false;
-		shm = shm_open(NAME, O_RDWR, 066);
+		shm = shm_open(NAME, O_RDWR, 0666);
 
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
