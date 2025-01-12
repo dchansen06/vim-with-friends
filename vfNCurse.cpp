@@ -74,10 +74,17 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
         // Check for escape characters
         switch (chr){
             case '\t':
-                for (int i = 0; i < 4; i++){
+		for (volatile int j = 0; j < bc->numCursors; j++) {
+                if ((int)i == bc->cursorPos[j]){
+                    attron(COLOR_PAIR(HIGHLIGHTING));
+                }
+		    printChar(' ');
+		    attroff(COLOR_PAIR(HIGHLIGHTING));
+		}
+                for (int i = 0; i < 3; i++){
                     printChar (' ');
                 }
-                continue;
+		break;
             case '\n':
                 if(curY >= LINES - 1){
                     goto leaveLoop;
