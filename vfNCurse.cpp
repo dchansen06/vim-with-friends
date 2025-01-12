@@ -16,16 +16,9 @@ ScreenInfo::ScreenInfo(){
     // Initializes the screen
     initializeScreen();
 
-    // Initialize cursor
-    printingCur.X= 0;
-    printingCur.Y = 0;
-
-}
-
-// Displays the current mode of the editor
-void ScreenInfo::displayMode(string mode){
-    mvprintw(LINES-2, 0, mode.c_str()); // Prints out the mode
-    move(printingCur.Y, printingCur.X); // Puts cursor back where it goes
+    // Move cursor to 0, 0
+    curX = 0;
+    curY = 0;
 }
 
 // Initializes the screen
@@ -66,7 +59,6 @@ void ScreenInfo::initializeScreen(){
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
 void ScreenInfo::printScreen(volatile BufferContents* bc){
-    printingCur.X = printingCur.Y = 0;
     // Runs through the contents of the buffer, printing them to the screen
     for(volatile unsigned long long i = 0; i < bc->size; i++){
         int chr = bc->content[i]; // Get the character form the array
@@ -79,12 +71,12 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
                 }
                 continue;
             case '\n':
-                if(printingCur.Y >= LINES){
+                if(curY >= LINES){
                     goto leaveLoop;
                 }
-                printingCur.X = 0;
-                printingCur.Y++;
-                move(printingCur.Y, printingCur.X);
+                curX = 0;
+                curY++;
+                move(curY, curX);
                 continue;
         }
         
@@ -105,12 +97,9 @@ leaveLoop:
 void ScreenInfo::printChar (int chr){
     // Print out the character
     // Move the cursor over
-    if (printingCur.X != COLS - 1) {
+    if (curX != COLS - 1) {
         addch(chr);
-        move(printingCur.Y, ++printingCur.X);
+        move(curY, ++curX);
     }
 }
 
-int ScreenInfo::getLines (){
-    return LINES;
-}
