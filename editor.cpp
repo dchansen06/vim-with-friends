@@ -30,7 +30,20 @@ void update(volatile BufferContents* bc, int& cursorID)
 
 	switch(input) {
 		case 27: // ␛
-			// SPECIAL U/D/L/R HOME BACKSPACE
+			if (getch() != '[')
+				break;
+
+			input = getch();
+			switch(input) {
+				case 'A':
+					// UP
+				case 'B':
+					// DOWN
+				case 'C':
+					// RIGHT
+				case 'D':
+					// LEFT
+			}
 		case KEY_UP:
 			;
 			int offsetToLeft = 0;
