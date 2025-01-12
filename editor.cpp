@@ -15,7 +15,7 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 	bufferContent->content[bufferContent->cursorPos[cursorIdentity]] = character;
 	bufferContent->cursorPos[cursorIdentity]++;
 
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < bufferContent->numCursors; i++) {
 		if (bufferContent->cursorPos[i] > bufferContent->cursorPos[cursorIdentity])
 			bufferContent->cursorPos[i]--;
 	}
