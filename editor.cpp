@@ -36,16 +36,16 @@ void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 			input = getch();
 			switch(input) {
 				case 'A':
-					moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPosition[cursorIdentity]);
+					moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 					break;
 				case 'B':
-					moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPosition[cursorIdentity]);
+					moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 					break;
 				case 'C':
-					moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPosition[cursorIdentity]);
+					moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 					break;
 				case 'D':
-					moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPosition[cursorIdentity]);
+					moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 					break;
 			}
 			break;
