@@ -48,6 +48,8 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 				case 'D':
 					moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 					break;
+				default:
+					break;
 			}
 			break;
         /*
