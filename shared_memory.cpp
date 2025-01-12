@@ -20,10 +20,8 @@ string cleanFilename(string filename)
 	char buf[PATH_MAX];
 	char* path = realpath(filename.c_str(), buf);
 
-	if (path == nullptr) {
-		cerr << "Invalid filename given!\n";
-		exit(-1);
-	}
+	if (path == nullptr)
+		path = (char*)filename.c_str();
 
 	for (char letter : (string)path) {
 		if (letter == '/')
