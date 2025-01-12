@@ -1,13 +1,12 @@
 #include <iostream>
+#include <string>
+#include <fstream>
+
 #include <unistd.h>
-#include <sys/mman.h>
-#include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
-#include <cstdio>
-#include <string>
-#include <cstdlib>
-#include <fstream>
+
+#include <sys/mman.h>
 
 #include "shared_memory.h"
 
