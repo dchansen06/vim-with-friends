@@ -40,11 +40,11 @@ void update(BufferContents *bufferContent, int cursorIdentity)
 			cursorPos[cursorIdentity]++;
 			break;
 		case KEY_HOME:
-			int i = bufferContent->cursorPos[cursorIdentity];
-			while (i >= 0 && bufferContent->content[i] != '\n')
-				i--;
+			int shift = bufferContent->cursorPos[cursorIdentity];
+			while (shift >= 0 && bufferContent->content[shift] != '\n')
+				shift--;
 
-			cursorPos[cursorIdentity] = i + 1;
+			cursorPos[cursorIdentity] = shift + 1;
 			break;
 		case KEY_BACKSPACE:
 			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
