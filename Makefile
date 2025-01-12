@@ -12,5 +12,9 @@ all: main
 main: main.cpp vfNCurse.o shared_memory.o editor.o file_handler.o
 	$(CXX) $(CXXFLAGS) $(^) -o $(@) $(LDFLAGS)
 
+test: main
+	./$^ u text.txt
+	./$^ text.txt
+
 clean:
 	$(RM) $(RMFLAGS) main *.o

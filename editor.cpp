@@ -112,8 +112,6 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 			while (content[rightEndl + nextLineLen] != '\n')
 				nextLineLen++;
 			
-			nextLineLen++;
-			
 			if (cursorXPos > nextLineLen){
 				cursorID = rightEndl + nextLineLen;
 				return;
