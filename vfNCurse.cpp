@@ -16,7 +16,7 @@ void printChar (int, Cursor);
 
 void vfNCurse(){
 
-    // Creates cursor object and stores current mode of the editor
+    // Creates cursor object, string to store current mode
     Cursor cur = {0, 0};
     string mode = "NORMAL";
     bool quit = false;
@@ -70,7 +70,7 @@ void vfNCurse(){
 // Displays the current mode of the editor
 void displayMode(string mode, Cursor cur){
     mvprintw(LINES-2, 0, mode.c_str()); // Prints out the mode
-    move(cur.Y, cur.X); /// Puts cursor back where it goes
+    move(cur.Y, cur.X); // Puts cursor back where it goes
 }
 
 // Initializes ncurses
@@ -130,10 +130,26 @@ void moveCursor (int chr, Cursor& cur){
 
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
-void printScreen(ScreenBuffer* sb, Cursor cur){
+void printScreen(ScreenBuffer* sb, Cursor& cur){
     // Runs through the contents of the buffer, printing them to the screen
     for(size_t i = 0; i < sb->size; i++){
-        int chr = sb->content[i];
+        int chr = sb->content[i]; // Get the character form the array
+        
+        // Check for escape characters
+        switch (chr){
+            case '\t':
+                for (int i = 0; i < 4; i++){
+                    printChar (' ', cur);
+                }
+                continue;
+            case '\n':
+                cur.X = 0;
+                cur.Y--;
+                move(cur.Y, cur.X);
+                continue;
+        }
+        
+        // Otherwise, prints out the character
         printChar (chr, cur);
     }
 }

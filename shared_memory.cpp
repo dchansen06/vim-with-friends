@@ -38,23 +38,21 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	const int SIZE = 524288;
 	const char* NAME = ("/tmp" + name).c_str();	// Later mkdir so that we can /tmp/vim-with-friends/
 
-	int shm = shm_open(NAME, O_RDWR, 0666);
+	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
+	cout << "SHM: " << shm << " should be >=0 for client\n";
 	if (shm >= 0) {
-		shm_unlink(NAME);
-
-		host = false;
-		shm = shm_open(NAME, O_RDWR, 0666);
-
+		host = true;
+		ftruncate(shm, SIZE);
 		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	} else {
-		host = true;
+		host = false;
 
-		shm = shm_open(NAME, O_CREAT | O_RDWR, 0666);
-		ftruncate(shm, SIZE);
+		shm = shm_open(NAME, O_RDWR, 0666);
 
 		if (shm >= 0)
 			return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
 	}
 
+	cerr << "ERROR!\n";
 	return nullptr;
 }
