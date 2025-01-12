@@ -24,11 +24,10 @@ void update(BufferContents *bufferContent, int cursorIdentity)
 			cursorPos[cursorIdentity] -= lineLengthAbove;
 			break;
 		case KEY_DOWN:
-			int offsetToLeft = 0;
+			int offsetToLeft = 0, offsetToRight = 0;
 			while (offsetToLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft] != '\n')
 				offsetToLeft++;
 
-			int offsetToRight = 0;
 			while(offsetToRight <= bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent[bufferContent->cursorPos[cursorIdentity] + offsetToRight] != '\n')
 				offsetToRight++;
 
@@ -48,9 +47,9 @@ void update(BufferContents *bufferContent, int cursorIdentity)
 			cursorPos[cursorIdentity] = i + 1;
 			break;
 		case KEY_BACKSPACE:
-			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++) {
+			for (int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
 				bufferContent->content[i - 1] = bufferContent->content[i];
-			}
+
 			bufferContent->size--;
 			break;
 		case KEY_ENTER:
