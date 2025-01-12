@@ -6,6 +6,7 @@
 
 #include "editor.h"
 #include "shared_memory.h"
+#include "file_handler.h"
 
 void insert(char character, volatile BufferContents *bufferContent, int cursorIdentity)
 {
@@ -33,6 +34,13 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 		return;	// Nothing to do
 
 	switch(input) {
+		case KEY_SRIGHT:	// Save
+			saveFlag = true;
+			quitFlag = true;
+			break;
+		case KEY_SLEFT:		// Close /wo save
+			quitFlag = true;
+			break;
 		case KEY_RIGHT:
 			moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
@@ -44,13 +52,6 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			break;
 		case KEY_LEFT:
 			moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
-			break;
-		case KEY_HOME:
-			shift = bufferContent->cursorPos[cursorIdentity];
-			while (shift >= 0 && bufferContent->content[shift] != '\n')
-				shift--;
-
-			bufferContent->cursorPos[cursorIdentity] = shift + 1;
 			break;
 		case KEY_BACKSPACE:
 			if (bufferContent->cursorPos[cursorIdentity] <= 0)

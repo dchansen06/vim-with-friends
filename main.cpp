@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
 
         usleep(16667);
     }
+	endwin();
 
 	if (isHost && saveFlag)
 		writeFile(sharedBuffer, argv[1]);
