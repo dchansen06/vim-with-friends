@@ -83,7 +83,7 @@ void update(volatile BufferContents* bc, int& cursorID)
 	}
 }
 
-void moveDown (const int& content[], int size, int& cursorID){
+void moveDown(volatile char* content, volatile int size, int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int nextLineLen;
 
