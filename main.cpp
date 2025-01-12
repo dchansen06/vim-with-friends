@@ -57,7 +57,10 @@ bool writeFile(volatile BufferContents* buffer, char *fileName) {
 
 
 int main(int argc, char *argv[]) {
-    if(argc < 2) {
+    if (argc == 3) {	// ./main unlink <file>
+	unlink(argv[2]);
+	return 2;
+    } else if(argc < 2) {
         cout << "Too few arguments.\n";
         return 1;
     }
