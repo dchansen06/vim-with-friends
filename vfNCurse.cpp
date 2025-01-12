@@ -82,7 +82,7 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
         
         // Otherwise, prints out the character
         for (volatile int j = 0; j < bc->numCursors; j++){
-            if (i == bc->cursorPos[j])
+            if ((int)i == bc->cursorPos[j])
             attron(COLOR_PAIR(HIGHLIGHTING));
         }
         printChar (chr);
