@@ -15,22 +15,26 @@ void update(volatile BufferContents *bufferContent, int cursorIdentity)
     char input;
 	switch(input = getch()) {
 		case KEY_UP:
-			
+			int offsetToLeft = 0;
+			while (offsetToLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft] != '\n')
+				offsetToLeft++;
+
+			int lineLengthAbove = 0;
+			while(offsetToLeft + lineLengthAbove > bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft - lineLengthAbove] != '\n')
+				lineLengthAbove++;
+
+			cursorPos[cursorIdentity] -= lineLengthAbove;
 			break;
 		case KEY_DOWN:
-			int currentPositionX = 0;
+			int offsetToLeft = 0;
+			while (offsetToLeft < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - offsetToLeft] != '\n')
+				offsetToLeft++;
 
-			while (currentPositionX < bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent->content[bufferContent->cursorPos[cursorIdentity] - currentPositionX] != '\n')
-				currentPositionX++;
+			int offsetToRight = 0;
+			while(offsetToRight <= bufferContent->size - bufferContent->cursorPos[cursorIdentity] && bufferContent[bufferContent->cursorPos[cursorIdentity] + offsetToRight] != '\n')
+				offsetToRight++;
 
-			int i = 0;
-			while(i <= bufferContent->size
-
-			while (countToHome != 0 && bufferContent->content[countToHome] != '\n') {
-				cursorPos++;
-				countToHome--;
-			}
-
+			cursorPos += offsetToLeft + offsetToRight;
 			break;
 		case KEY_LEFT:
 			cursorPos[cursorIdentity]--;
