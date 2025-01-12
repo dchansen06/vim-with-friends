@@ -110,3 +110,7 @@ void ScreenInfo::printChar (int chr){
         move(printingCur.Y, ++printingCur.X);
     }
 }
+
+int ScreenInfo::getLines (){
+    return LINES;
+}
