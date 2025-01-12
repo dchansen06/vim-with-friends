@@ -105,7 +105,7 @@ void ScreenInfo::printScreen(ScreenBuffer* sb){
                 continue;
             case '\n':
                 myCur.X = 0;
-                myCur.Y--;
+                myCur.Y++;
                 move(myCur.Y, myCur.X);
                 continue;
         }
