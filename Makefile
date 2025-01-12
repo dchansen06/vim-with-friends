@@ -1,10 +1,17 @@
+CXX = g++
+CXXFLAGS = -Wall -Wextra -g
+RM = rm
+RMFLAGS = -f
+LDFLAGS = -lncurses
+
 all: main
 
 %.o: %.cpp | %.h
-	g++ -Wall -Wextra -c $(^) -o $(@)
+	$(CXX) $(CXXFLAGS) -c $(^) -o $(@)
 
+<<<<<<< HEAD
 main: main.cpp shared_memory.o
 	g++ $(^) -o $(@) -lncurses -Wall -Wextra
 
 clean:
-	rm -f main *.o
+	$(RM) $(RMFLAGS) main *.o

@@ -12,14 +12,4 @@
 
 	// Always returns a shared memory file descriptor
 	volatile BufferContents* getSharedMemory(std::string filename, bool &host);
-
-	/*
-		Opening a file creates /tmp/vim-with-friends/.../
-		Opening vim-with-friends checks for a tmp entry first
-		When host closes file then tmp deleted
-		Only host can write to file
-
-		Share buffer memory between processes
-		Everyone R/W same memory
-	*/
 #endif

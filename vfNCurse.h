@@ -2,16 +2,19 @@
 #include <curses.h>
 #include <string>
 
+#include "shared_memory.h"
+
 #ifndef VFNCURSE_H
 	#define VFNCURSE_H
-	volatile struct Cursor {
+	struct Cursor {
 		int X;
 		int Y;
 	};
 
-	volatile struct ScreenBuffer {
+	struct ScreenBuffer {
+		unsigned long long size;
 		int numberOfCursors;
-		int cursorPosition[16];
+		int cursorPosition[16];	// Magic
 		char content[];
 	};
 
@@ -25,6 +28,10 @@
 	// Precondition: takes in the current mode of the editor and the cursor object
 	// Postcondition: displays the current mode of the editor
 	void displayMode(std::string, Cursor);
+
+	// Precondition: takes in a reference to the screen buffer
+	// Postcondition: prints it out to the screen
+	void printScreen(ScreenBuffer& sb, Cursor);
 
 	void vfNCurse();
 

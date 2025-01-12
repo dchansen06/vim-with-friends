@@ -11,10 +11,10 @@ using namespace std;
 // Define Statements
 #define HIGHLIGHTING 1
 
-void vfNCurse(){
+// Helper Functions
+void printChar (int, Cursor);
 
-    // Sets up everything for ncurses
-    initializeScreen();
+void vfNCurse(){
 
     // Creates cursor object and stores current mode of the editor
     Cursor cur = {0, 0};
@@ -57,10 +57,7 @@ void vfNCurse(){
                 mode = "NORMAL";
             } else if (chr < 256){
                 attron(COLOR_PAIR(HIGHLIGHTING)); // Start highlighting
-                addch(chr);
-                attroff(COLOR_PAIR(HIGHLIGHTING)); // End highlighting
-                if (cur.X != COLS - 1)
-                    move(cur.Y, ++cur.X);
+
             }
         }
 
@@ -131,7 +128,26 @@ void moveCursor (int chr, Cursor& cur){
     move(cur.Y, cur.X);
 }
 
+// Precondition: takes in a reference to the screen buffer
+// Postcondition: prints it out to the screen
+void printScreen(ScreenBuffer* sb, Cursor cur){
+    // Runs through the contents of the buffer, printing them to the screen
+    for(size_t i = 0; i < sb->size; i++){
+        int chr = sb->content[i];
+        printChar (chr, cur);
+    }
+}
+
 ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
 {
-	return (ScreenBuffer*){bufferContents->numberOfPointers, bufferContents->cursorPosition, bufferContents->content};
+	return (ScreenBuffer*)bufferContents;	// May have to do more edits later, for now it is good
+}
+
+// Print a single character
+void printChar (int chr, Cursor cur){
+    // Print out the character
+    addch(chr);
+    // Move the cursor over
+    if (cur.X != COLS - 1)
+        move(cur.Y, ++cur.X);
 }

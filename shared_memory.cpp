@@ -1,3 +1,4 @@
+#include <iostream>
 #include <unistd.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -14,11 +15,15 @@ using namespace std;
 
 string cleanFilename(string filename)
 {
-	const char* file = filename.c_str();
-	char* output = realpath(file.c_str(), new char[PATH_MAX + 1]);
-	string out = output;
-	delete[] output;
-	return out;
+	char buf[PATH_MAX];
+	char* path = realpath(filename.c_str(), buf);
+
+	if (path != nullptr) {
+		return (string)path;
+	} else {
+		cerr << "Invalid filename given!\n";
+		exit(-1);
+	}
 }
 
 volatile BufferContents* getSharedMemory(string filename, bool &host)

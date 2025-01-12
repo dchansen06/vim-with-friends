@@ -38,6 +38,7 @@ bool writeFile(volatile BufferContents* buffer, char *fileName) {
     for(int i = 0; i < buffer->size; i++) {
         outFile << buffer->content[i];
     }
+
     outFile.close();
     return true;
 }
@@ -48,9 +49,9 @@ int main(int argc, char *argv[]) {
         cout << "Too few arguments.\n";
         return 1;
     }
-    
+
     bool isHost;
-    volatile BufferContents *sharedBuffer = getSharedMemory(argv[1], isHost);
+    volatile BufferContents *sharedBuffer = getSharedMemory(static_cast<string>(argv[1]), isHost);
     if(isHost) {
         sharedBuffer->numberOfCursors = 1;
         sharedBuffer->cursorPosition[0] = 0;
@@ -59,7 +60,6 @@ int main(int argc, char *argv[]) {
             sharedBuffer->size = 0;
         }
     }
-
     string lineToWrite;
     getline(cin, lineToWrite);
 
