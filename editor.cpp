@@ -86,7 +86,10 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 
 			int beginThisLine = cursorID;
 			int rightEndl = cursorID;
-
+			
+			if (content[beginThisLine] == '\n'){
+				beginThisLine--;
+			}
 			// Finds the position of the last \n
 			while (beginThisLine >= 0 && content[beginThisLine] != '\n')
 				beginThisLine--;
