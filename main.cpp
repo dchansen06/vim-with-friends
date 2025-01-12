@@ -74,6 +74,13 @@ int main(int argc, char *argv[]) {
         while(sharedBuffer->isBeingAccessed){}
 	    sharedBuffer->cursorPosition[sharedBuffer->numberOfCursors++] = 0;
     }
+    
+    ScreenInfo screen;
+
+    while(true) {
+        screen.printScreen((ScreenBuffer*)sharedBuffer);
+    }
+
 
     unlink(argv[1]);
 }
