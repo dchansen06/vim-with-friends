@@ -23,8 +23,6 @@ string cleanFilename(string filename)
 
 	if (path == NULL) {
 		path = (char*)filename.c_str();
-		cerr << "Something went really wrong, could not find realpath(" << path << ")\n";
-		exit(-1);
 	}
 
 	for (char letter : (string)path) {

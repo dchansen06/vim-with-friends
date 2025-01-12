@@ -90,11 +90,11 @@ void ScreenInfo::moveCursor (int chr){
 
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
-void ScreenInfo::printScreen(ScreenBuffer* sb){
+void ScreenInfo::printScreen(BufferContents* bc){
     // Runs through the contents of the buffer, printing them to the screen
-    for(size_t i = 0; i < sb->size; i++){
+    for(size_t i = 0; i < bc->size; i++){
         refresh();
-        int chr = sb->content[i]; // Get the character form the array
+        int chr = bc->content[i]; // Get the character form the array
         
         // Check for escape characters
         switch (chr){
@@ -118,11 +118,6 @@ void ScreenInfo::printScreen(ScreenBuffer* sb){
         attroff(COLOR_PAIR(HIGHLIGHTING));
     }
     refresh();
-}
-
-ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents)
-{
-	return (ScreenBuffer*)bufferContents;	// May have to do more edits later, for now it is good
 }
 
 // Print a single character
