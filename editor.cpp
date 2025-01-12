@@ -109,14 +109,16 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 			}
 
 			// Gets the size of the next line
-			while (content[rightEndl + nextLineLen] != '\n')
+			while (content[rightEndl + nextLineLen + 1] != '\n')
 				nextLineLen++;
 			
+			nextLineLen++;
+
 			if (cursorXPos > nextLineLen){
 				cursorID = rightEndl + nextLineLen;
 				return;
 			}
-			cursorID = rightEndl + cursorXPos;
+			cursorID = rightEndl + cursorXPos + 1;
 			return;
 }
 
