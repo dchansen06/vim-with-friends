@@ -15,9 +15,9 @@ using namespace std;
 string cleanFilename(string filename)
 {
 	const char* file = filename.c_str();
-	char* output = realpath(file, new char[PATH_MAX + 1]);
+	char* output = realpath(file.c_str(), new char[PATH_MAX + 1]);
 	string out = output;
-	delete output;
+	delete[] output;
 	return out;
 }
 
