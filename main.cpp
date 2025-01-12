@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
         screen.printScreen(sharedBuffer);
         sharedBuffer->isBeingAccessed = false;
 
-        usleep(1667);
+        usleep(3333);
     }
 	endwin();
 
