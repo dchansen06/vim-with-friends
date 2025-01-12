@@ -58,7 +58,7 @@ volatile BufferContents* getSharedMemory(string filename, bool &host)
 	}
 }
 
-int unlink(std::string filename)
+int unlinkFile(std::string filename)
 {
 	return shm_unlink(("/" + cleanFilename(filename)).c_str());
 }

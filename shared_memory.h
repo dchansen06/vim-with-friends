@@ -13,5 +13,5 @@
 
 	volatile BufferContents* getSharedMemory(std::string filename, bool &host);
 
-	int unlink(std::string filename);
+	int unlinkFile(std::string filename);
 #endif
