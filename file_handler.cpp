@@ -51,6 +51,9 @@ bool writeFile(volatile BufferContents* buffer, char *fileName)
 	for(volatile long long unsigned i = 0; i < buffer->size; i++)
 		outFile << buffer->content[i];
 
+	if (buffer->content[buffer->size - 1] != '\n')
+		outFile << '\n';
+
 	outFile.close();
 	buffer->isBeingAccessed = false;
 	return true;
