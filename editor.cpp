@@ -24,6 +24,7 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 {
 	char input = getch();
+	int shift = 0;	// Only use in KEY_HOME
 
 	if (input == ERR)
 		return;	// Nothing to do
@@ -50,7 +51,7 @@ void update(volatile BufferContents* bufferContent, int& cursorIdentity)
 			}
 			break;
 		case KEY_HOME:
-			int shift = bufferContent->cursorPos[cursorIdentity];
+			shift = bufferContent->cursorPos[cursorIdentity];
 			while (shift >= 0 && bufferContent->content[shift] != '\n')
 				shift--;
 
