@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     if(isHost) {
         cursorIdentity = 0;
         sharedBuffer->numCursors = 1;
-        sharedBuffer->cursorPos[0] = 0;
+        sharedBuffer->cursorPos[0] = 5;
 
         sharedBuffer->isBeingAccessed = false;
         if(!readFile(sharedBuffer, argv[1])){

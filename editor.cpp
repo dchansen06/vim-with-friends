@@ -1,5 +1,7 @@
 #include <cctype>
 
+#include <iostream>
+
 #include <ncurses.h>
 
 #include "editor.h"
@@ -26,7 +28,7 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 	char input = getch();
 //	int shift = 0;	// Only use in KEY_HOME
 
-	if (input == ERR)
+	if (input == ERR || input != 27 && input != '\t' && input != '\n' && !isprint(input))
 		return;	// Nothing to do
 
 	switch(input) {
