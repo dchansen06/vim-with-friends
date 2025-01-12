@@ -50,7 +50,7 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_LEFT:
-			moveLeft(bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			moveLeft(bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_BACKSPACE:
 			if (bufferContent->cursorPos[cursorIdentity] <= 0)
@@ -168,7 +168,7 @@ void moveRight (int size, volatile int& cursorID){
 }
 
 // Move cursor left
-void moveLeft (int size, volatile int& cursorID){
+void moveLeft (volatile int& cursorID){
 	if (cursorID == 0){
 		return;
 	}
