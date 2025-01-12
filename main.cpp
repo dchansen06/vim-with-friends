@@ -86,6 +86,7 @@ int main(int argc, char *argv[]) {
         while(sharedBuffer->isBeingAccessed){}
         sharedBuffer->isBeingAccessed = true;
         update(sharedBuffer, cursorIdentity);
+	clear();
         screen.printScreen(sharedBuffer);
         sharedBuffer->isBeingAccessed = false;
 
