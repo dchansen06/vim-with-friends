@@ -10,6 +10,8 @@
 using namespace std;
 
 bool readFile(volatile BufferContents* buffer, char *fileName) {
+    while(buffer->isBeingAccessed){}
+
     buffer->isBeingAccessed = true;
     ifstream inFile(fileName);
     if(!inFile) {
@@ -32,6 +34,8 @@ bool readFile(volatile BufferContents* buffer, char *fileName) {
 }
 
 bool writeFile(volatile BufferContents* buffer, char *fileName) {
+    while(buffer->isBeingAccessed){}
+
     buffer->isBeingAccessed = true;
     ofstream outFile(fileName);
     if(!outFile) {
@@ -62,11 +66,12 @@ int main(int argc, char *argv[]) {
         sharedBuffer->numberOfCursors = 1;
         sharedBuffer->cursorPosition[0] = 0;
 
+        sharedBuffer->isBeingAccessed = false;
         if(!readFile(sharedBuffer, argv[1])){
             sharedBuffer->size = 0;
         }
-        sharedBuffer->isBeingAccessed = false;
     } else {
+        while(sharedBuffer->isBeingAccessed){}
 	    sharedBuffer->cursorPosition[sharedBuffer->numberOfCursors++] = 0;
     }
 
