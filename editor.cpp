@@ -173,7 +173,7 @@ void moveUp (volatile char content[], volatile int& cursorID){
 
 // Move cursor right
 void moveRight (int size, volatile int& cursorID){
-	if (cursorID == size){
+	if (cursorID == size - 1){
 		return;
 	}
 	cursorID++;
