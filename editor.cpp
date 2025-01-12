@@ -29,6 +29,8 @@ void update(volatile BufferContents* bc, int& cursorID)
 		return;	// Nothing to do
 
 	switch(input) {
+		case 27: // ␛
+			// SPECIAL U/D/L/R HOME BACKSPACE
 		case KEY_UP:
 			;
 			int offsetToLeft = 0;
