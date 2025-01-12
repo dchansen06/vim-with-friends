@@ -48,7 +48,7 @@ bool writeFile(volatile BufferContents* buffer, char *fileName)
 		return false;
 	}
 
-	for(volatile long long unsigned i = 0; i < buffer->size; i++)
+	for(volatile long long unsigned i = 0; i < buffer->size - 1; i++)
 		outFile << buffer->content[i];
 
 	if (buffer->content[buffer->size - 1] != '\n')

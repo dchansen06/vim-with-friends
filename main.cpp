@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
         sharedBuffer->isBeingAccessed = false;
         if(!readFile(sharedBuffer, argv[1])) {
             sharedBuffer->size = 1;
-	    sharedBuffer->content[0] = '\n';
+	    sharedBuffer->content[0] = ' ';
 	}
     } else {
         while(sharedBuffer->isBeingAccessed){}
