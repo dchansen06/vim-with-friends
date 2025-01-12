@@ -3,14 +3,16 @@
 #include <ncurses.h>
 
 #include "editor.h"
+#include "shared_memory.h"
 
-void insert(char character, BufferContents *bufferContent)
+void insert(char character, volatile BufferContents *bufferContent)
 {
 
 }
 
-void update(BufferContents *bufferContent, int cursorIdentity)
+void update(volatile BufferContents *bufferContent, int cursorIdentity)
 {
+    char input;
 	switch(input = getch()) {
 		case KEY_UP:
 			int offsetToLeft = 0;

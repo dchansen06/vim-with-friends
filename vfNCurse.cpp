@@ -62,7 +62,7 @@ void ScreenInfo::initializeScreen(){
 
 // Precondition: takes in a reference to the screen buffer
 // Postcondition: prints it out to the screen
-void ScreenInfo::printScreen(BufferContents* bc){
+void ScreenInfo::printScreen(volatile BufferContents* bc){
     printingCur.X = printingCur.Y = 0;
     // Runs through the contents of the buffer, printing them to the screen
     for(size_t i = 0; i < bc->size; i++){
