@@ -59,11 +59,9 @@ int main(int argc, char *argv[]) {
         if(!readFile(sharedBuffer, argv[1])){
             sharedBuffer->size = 0;
         }
+    } else {
+	sharedBuffer->cursorPosition[sharedBuffer->numberOfCursors++] = 0;
     }
 
-//    if(isHost) {
-	errno = 0;
-      cout << "Unlink " << unlink(argv[1]) << endl;
-	cout << "Errno " << errno << endl;
-//    }
+    unlink(argv[1]);
 }
