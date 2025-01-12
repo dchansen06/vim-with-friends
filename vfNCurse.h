@@ -11,13 +11,6 @@
 		int Y;
 	};
 
-	struct ScreenBuffer {
-		unsigned long long size;
-		int numCursors;
-		Cursor cursorPos[16];	// Magic
-		char content[];
-	};
-
 	class ScreenInfo {
 		
 		private:
@@ -42,10 +35,8 @@
 			
 			// Precondition: takes in a reference to the screen buffer
 			// Postcondition: prints it out to the screen
-			void printScreen(ScreenBuffer* sb);
+			void printScreen(BufferContents* bc);
 			};
 
 	void vfNCurse();
-
-	ScreenBuffer* fillScreenBuffer(BufferContents* bufferContents);
 #endif

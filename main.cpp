@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
     ScreenInfo screen;
 
     while(true) {
-        screen.printScreen((ScreenBuffer*)sharedBuffer);
+        screen.printScreen((BufferContents*)sharedBuffer);
     }
 
 
