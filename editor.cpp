@@ -28,7 +28,6 @@ void insert(char character, volatile BufferContents *bufferContent, int cursorId
 void update(volatile BufferContents* bufferContent, int cursorIdentity)
 {
 	int input = getch();
-	int shift = 0;	// Only use in KEY_HOME
 
 	if (input == ERR)
 		return;	// Nothing to do
@@ -42,16 +41,16 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			quitFlag = true;
 			break;
 		case KEY_RIGHT:
-			moveRight(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			moveRight(bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_UP:
-			moveUp(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			moveUp(bufferContent->content, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_DOWN:
 			moveDown(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_LEFT:
-			moveLeft(bufferContent->content, bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
+			moveLeft(bufferContent->size, bufferContent->cursorPos[cursorIdentity]);
 			break;
 		case KEY_BACKSPACE:
 			if (bufferContent->cursorPos[cursorIdentity] <= 0)
@@ -87,7 +86,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 
 			int beginThisLine = cursorID;
 			int rightEndl = cursorID;
-			
+
 			// Finds the position of the last \n
 			while (beginThisLine >= 0 && content[beginThisLine] != '\n')
 				beginThisLine--;
@@ -124,7 +123,7 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 }
 
 // Moves the cursor up a line
-void moveUp (volatile char content[], int size, volatile int& cursorID){
+void moveUp (volatile char content[], volatile int& cursorID){
 			int cursorXPos; // Var to store X position of current cursor
 			int beginAboveLine;
 
@@ -161,7 +160,7 @@ void moveUp (volatile char content[], int size, volatile int& cursorID){
 }
 
 // Move cursor right
-void moveRight (volatile char content[], int size, volatile int& cursorID){
+void moveRight (int size, volatile int& cursorID){
 	if (cursorID == size){
 		return;
 	}
@@ -169,7 +168,7 @@ void moveRight (volatile char content[], int size, volatile int& cursorID){
 }
 
 // Move cursor left
-void moveLeft (volatile char content[], int size, volatile int& cursorID){
+void moveLeft (int size, volatile int& cursorID){
 	if (cursorID == 0){
 		return;
 	}
