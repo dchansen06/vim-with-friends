@@ -58,6 +58,9 @@ void ScreenInfo::initializeScreen(){
 
     // Hides the real cursor
     curs_set(0);
+
+    // No blocking getch(), but getch() now returns ERR if nothing going in
+    nodelay(0, true);
 }
 
 // Precondition: takes in a reference to the screen buffer
@@ -65,7 +68,7 @@ void ScreenInfo::initializeScreen(){
 void ScreenInfo::printScreen(volatile BufferContents* bc){
     printingCur.X = printingCur.Y = 0;
     // Runs through the contents of the buffer, printing them to the screen
-    for(size_t i = 0; i < bc->size; i++){
+    for(volatile unsigned long long i = 0; i < bc->size; i++){
         int chr = bc->content[i]; // Get the character form the array
         
         // Check for escape characters
@@ -86,7 +89,7 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
         }
         
         // Otherwise, prints out the character
-        for (int j = 0; j < bc->numCursors; j++){
+        for (volatile int j = 0; j < bc->numCursors; j++){
             if (i == bc->cursorPos[j])
             attron(COLOR_PAIR(HIGHLIGHTING));
         }

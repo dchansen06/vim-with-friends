@@ -12,8 +12,12 @@ void insert(char character, volatile BufferContents *bufferContent)
 
 void update(volatile BufferContents *bufferContent, int cursorIdentity)
 {
-	char input;
-	switch(input = getch()) {
+	char input = getch();
+
+	if (input == ERR)
+		return;	// Nothing to do
+
+	switch(input) {
 		case KEY_UP:
 			;
 			int offsetToLeft = 0;
