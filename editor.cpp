@@ -10,9 +10,9 @@
 void insert(char character, volatile BufferContents *bufferContent, int cursorIdentity)
 {
 	bufferContent->size++;
+
 	for (volatile int i = bufferContent->size - 1; i >= bufferContent->cursorPos[cursorIdentity]; i--) {
-		if (i > -1 && i < 524288 - 1)
-			bufferContent->content[i+1] = bufferContent->content[i];
+		bufferContent->content[i+1] = bufferContent->content[i];
 	}
 
 	bufferContent->content[bufferContent->cursorPos[cursorIdentity]] = character;
@@ -53,11 +53,14 @@ void update(volatile BufferContents* bufferContent, int cursorIdentity)
 			bufferContent->cursorPos[cursorIdentity] = shift + 1;
 			break;
 		case KEY_BACKSPACE:
+			if (bufferContent->cursorPos[cursorIdentity] <= 0)
+				break;
+
 			for (volatile unsigned int i = bufferContent->cursorPos[cursorIdentity]; i < bufferContent->size && i > 0; i++)
 				bufferContent->content[i - 1] = bufferContent->content[i];
 
 			for (int i = 0; i < 16; i++) {
-				if (bufferContent->cursorPos[i] > bufferContent->cursorPos[cursorIdentity])
+				if (bufferContent->cursorPos[i] >= bufferContent->cursorPos[cursorIdentity])
 					bufferContent->cursorPos[i]--;
 			}
 
@@ -102,6 +105,8 @@ void moveDown (volatile char content[], int size, volatile int& cursorID){
 				rightEndL++;
 
 			}
+
+			rightEndL++;
 
 			// Gets the size of the next line
 			while (content[rightEndL + nextLineLen] != '\n')

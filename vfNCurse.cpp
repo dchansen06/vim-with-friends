@@ -81,6 +81,8 @@ void ScreenInfo::printScreen(volatile BufferContents* bc){
                 if ((int)i == bc->cursorPos[j]){
                     attron(COLOR_PAIR(HIGHLIGHTING));
                     printChar(' ');
+		    attroff(COLOR_PAIR(HIGHLIGHTING));
+			break;
                 }
 		}
 
