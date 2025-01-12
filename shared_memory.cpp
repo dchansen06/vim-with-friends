@@ -21,36 +21,45 @@ string cleanFilename(string filename)
 	char buf[PATH_MAX];
 	char* path = realpath(filename.c_str(), buf);
 
-	if (path == nullptr)
-		path = (char*)filename.c_str();
+	if (path == NULL) {
+		cerr << "Something went really wrong\n";
+		exit(-1);
+	}
 
 	for (char letter : (string)path) {
 		if (letter == '/')
-			name += '.';
+			name += '0';
 		else
 			name += letter;
 	}
 
-	return "/tmp/vfNCurse/" + name;
+	return name.substr(1);
 }
 
 volatile BufferContents* getSharedMemory(string filename, bool &host)
 {
 	const int SIZE = 524288;
 
-	filename = cleanFilename(filename);
-	const char* NAME = filename.c_str();
+	const char* NAME = cleanFilename(filename).c_str();
 
-	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR|O_TRUNC, 0666);
+	cout << "Name is " << filename.c_str() << " and " << NAME << " and " << filename << endl;
 
-	if (EEXIST != errno) {
+	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
+
+	cout << "shm is " << shm << " and errno is " << errno << " and filename is " << NAME << endl;
+	cout << "All errors: EACCESS" << EACCES << " EEXIST" << EEXIST << " EINVAL" << EINVAL << " EMFILE" << EMFILE << " ENAMETOOLONG" << ENAMETOOLONG << " ENFILE" << ENFILE << " ENOENT" << ENOENT << endl;
+
+	if (EEXIST != errno && shm >= 0) {
 		host = true;
 		ftruncate(shm, SIZE);
-		return (volatile BufferContents*)mmap(0, SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, shm, 0);
-	} else {
+		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
+	} else if (shm >= 0) {
 		host = false;
 		shm = shm_open(NAME, O_RDWR, 0666);
-		return (volatile BufferContents*)mmap(0, SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, shm, 0);
+		return (volatile BufferContents*)mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm, 0);
+	} else {
+		cerr << "Something went wrong horribly!\n";
+		exit(-1);
 	}
 }
 
