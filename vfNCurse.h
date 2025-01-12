@@ -13,7 +13,7 @@
 
 	struct ScreenBuffer {
 		unsigned long long size;
-		int numberOfCursors;
+		int numCursors;
 		Cursor cursorPos[16];	// Magic
 		char content[];
 	};
@@ -28,6 +28,7 @@
 			void initializeScreen(); // Initializes the screen	
 			void displayMode(std::string); // Prints the mode of the editor
 			void printChar(int); // Prints out a char
+			bool checkCursor(Cursor[], int);
 
 
 		public:

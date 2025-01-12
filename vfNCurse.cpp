@@ -129,3 +129,14 @@ void ScreenInfo::printChar (int chr){
     if (myCur.X != COLS - 1)
         move(myCur.Y, ++myCur.X);
 }
+
+bool ScreenInfo::checkCursor (Cursor cursors[], int numCurs){
+    // Checks each cursor position
+    for (int i = 0; i < numCurs; i++){
+        // If found return true
+       if (myCur == cursors[i]){
+           return true;
+       }
+    }
+    return false;
+}
