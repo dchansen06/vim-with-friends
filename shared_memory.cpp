@@ -22,26 +22,27 @@ string cleanFilename(string filename)
 	char* path = realpath(filename.c_str(), buf);
 
 	if (path == NULL) {
+		path = (char*)filename.c_str();
 		cerr << "Something went really wrong\n";
 		exit(-1);
 	}
 
 	for (char letter : (string)path) {
 		if (letter == '/')
-			name += '0';
+			name += '.';
 		else
 			name += letter;
 	}
 
-	return name.substr(1);
+	return name;
 }
 
 volatile BufferContents* getSharedMemory(string filename, bool &host)
 {
 	const int SIZE = 524288;
 
-	const char* NAME = cleanFilename(filename).c_str();
-
+	filename = "/tmp" + cleanFilename(filename);
+	const char* NAME = filename.c_str();
 	cout << "Name is " << filename.c_str() << " and " << NAME << " and " << filename << endl;
 
 	int shm = shm_open(NAME, O_EXCL|O_CREAT|O_RDWR, 0666);
