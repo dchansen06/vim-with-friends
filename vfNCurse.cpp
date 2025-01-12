@@ -68,7 +68,7 @@ void ScreenInfo::initializeScreen(){
 void ScreenInfo::printScreen(volatile BufferContents* bc){
     printingCur.X = printingCur.Y = 0;
     // Runs through the contents of the buffer, printing them to the screen
-    for(volatile unsigned long long i = 0; i < bc->size; i++){
+    for(volatile unsigned long long i = 0; i < bc->size - 1; i++){
         int chr = bc->content[i]; // Get the character form the array
         
         // Check for escape characters
